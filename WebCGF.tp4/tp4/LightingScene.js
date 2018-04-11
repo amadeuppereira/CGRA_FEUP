@@ -84,7 +84,10 @@ class LightingScene extends CGFscene
 		this.windowAppearance.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
 
 		this.cylinderAppearance = new CGFappearance(this);
-		this.cylinderAppearance.loadTexture("../resources/images/board.png");
+		this.cylinderAppearance.loadTexture("../resources/images/textura.png");
+		this.cylinderAppearance.setAmbient(0.6,0.6,0.9,1);
+    this.cylinderAppearance.setDiffuse(0.6,0.6,0.9,1);
+    this.cylinderAppearance.setSpecular(0.1,0.1,0.1,1);
 
 
 	};

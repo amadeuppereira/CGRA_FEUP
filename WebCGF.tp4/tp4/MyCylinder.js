@@ -39,13 +39,12 @@ class MyCylinder extends CGFobject {
       for (let i = 0; i < this.slices; i++) {
         this.vertices.push(Math.cos(i * angle), Math.sin(i * angle), k);
         this.normals.push(Math.cos(i * angle), Math.sin(i * angle), 0);
-        this.texCoords.push(Math.cos(k * angle), Math.sin(k * angle));
+        this.texCoords.push(i*1/this.slices,k);
       }
     }
 
     for (let k = 0; k < this.stacks; k++) {
       for (let i = 0; i < this.slices; i++) {
-
         if(k != 0 && i != 0) {
 					this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i - 1, this.slices*(k-1) + i);
 					this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i , this.slices*k + i);
@@ -54,7 +53,6 @@ class MyCylinder extends CGFobject {
 						this.indices.push(this.slices*k + i, this.slices*(k-1), this.slices*k);
 					}
 				}
-
       }
     }
   };

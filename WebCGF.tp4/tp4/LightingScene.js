@@ -84,7 +84,7 @@ class LightingScene extends CGFscene
 		this.windowAppearance.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
 
 		this.cylinderAppearance = new CGFappearance(this);
-		this.cylinderAppearance.loadTexture("../resources/images/textura.png");
+		this.cylinderAppearance.loadTexture("../resources/images/slides.png");
 		this.cylinderAppearance.setAmbient(0.6,0.6,0.9,1);
     this.cylinderAppearance.setDiffuse(0.6,0.6,0.9,1);
     this.cylinderAppearance.setSpecular(0.1,0.1,0.1,1);
@@ -240,7 +240,7 @@ class LightingScene extends CGFscene
 		// cylinder
 		this.pushMatrix();
 			this.translate(14, 0, 14);
-			this.scale(1, 8.5, 1);
+			this.scale(1, 8, 1);
 			this.rotate(-90*degToRad, 1, 0, 0);
 			this.cylinderAppearance.apply();
 			this.cylinder.display();

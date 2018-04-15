@@ -35,22 +35,22 @@ class MyCylinder extends CGFobject {
     var angle = (2 * Math.PI) / this.slices;
     var stackSize = 1.0 / this.stacks;
 
-    for (let k = 0; k < this.stacks; k += stackSize) {
-      for (let i = 0; i < this.slices; i++) {
-        this.vertices.push(Math.cos(i * angle), Math.sin(i * angle), k);
+    for (let k = 0; k <= this.stacks; k++) {
+      for (let i = 0; i <= this.slices; i++) {
+        this.vertices.push(Math.cos(i * angle), Math.sin(i * angle), k*stackSize);
         this.normals.push(Math.cos(i * angle), Math.sin(i * angle), 0);
-        this.texCoords.push(i*1/this.slices,k);
+        this.texCoords.push(i/this.slices,k*stackSize);
       }
     }
 
-    for (let k = 0; k < this.stacks; k++) {
-      for (let i = 0; i < this.slices; i++) {
+    for (let k = 0; k <= this.stacks; k++) {
+      for (let i = 0; i <= this.slices; i++) {
         if(k != 0 && i != 0) {
-					this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i - 1, this.slices*(k-1) + i);
-					this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i , this.slices*k + i);
-					if(i == this.slices - 1) {
-						this.indices.push(this.slices*(k-1) + i, this.slices*(k-1), this.slices*k + i);
-						this.indices.push(this.slices*k + i, this.slices*(k-1), this.slices*k);
+          this.indices.push((this.slices+1)*k + i - 1, (this.slices+1)*(k-1) + i - 1, (this.slices+1)*(k-1) + i);
+					this.indices.push((this.slices+1)*k + i - 1, (this.slices+1)*(k-1) + i , (this.slices+1)*k + i);
+					if(i == this.slices) {
+						this.indices.push((this.slices+1)*(k-1) + i, (this.slices+1)*(k-1), (this.slices+1)*k + i);
+						this.indices.push((this.slices+1)*k + i, (this.slices+1)*(k-1), (this.slices+1)*k);
 					}
 				}
       }

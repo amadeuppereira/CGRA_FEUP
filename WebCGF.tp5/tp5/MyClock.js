@@ -16,6 +16,8 @@ class MyClock extends CGFobject {
     this.min = new MyClockHand(scene, 0.025, 0.55, 0.025);
     this.sec = new MyClockHand(scene, 0.025, 0.9, 0.025);
 
+    // var time = Date.now();
+    // var minutes
 
     this.sides = new MyCylinder(scene, 12, 1);
 
@@ -66,11 +68,11 @@ class MyClock extends CGFobject {
   };
 
   update(deltaTime) {
+    
 
     let secPassed = deltaTime / 1000;
 
-
-    this.hour.setAngle(360 * secPassed / (60*60*60));
+    this.hour.setAngle(360 * secPassed / (60*60*12));
     this.min.setAngle(360 * secPassed / (60*60));
     this.sec.setAngle(360 * secPassed / 60);
   };

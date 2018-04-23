@@ -12,7 +12,7 @@ class MyClockHand extends CGFobject
     this.zs = zs;
 		this.angle = 0;
 
-    this.setAngle(0);
+    this.angle = 0;
     this.hand = new MyCylinder(scene, 12, 20);
 
 	};

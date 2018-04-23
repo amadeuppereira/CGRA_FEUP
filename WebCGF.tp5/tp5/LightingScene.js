@@ -6,6 +6,8 @@ var BOARD_HEIGHT = 4.0;
 var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 
+var FPS = 60;
+
 class LightingScene extends CGFscene
 {
 	constructor()
@@ -90,7 +92,7 @@ class LightingScene extends CGFscene
     this.cylinderAppearance.setDiffuse(0.6,0.6,0.9,1);
     this.cylinderAppearance.setSpecular(0.1,0.1,0.1,1);
 
-		this.setUpdatePeriod(100);
+		this.setUpdatePeriod(1000/FPS);
 	};
 
 	initCameras()
@@ -265,6 +267,10 @@ class LightingScene extends CGFscene
 	};
 
 	update(currTime) {
+		var today = new Date();
+
+		currTime -= today.getTimezoneOffset()*60*1000;
+
 		this.lastTime = this.lastTime || 0;
 		this.deltaTime = currTime - this.lastTime;
 		this.lastTime = currTime;

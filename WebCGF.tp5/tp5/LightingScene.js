@@ -43,6 +43,7 @@ class LightingScene extends CGFscene
 		this.cylinder = new MyCylinder(this, 8, 20);
 		this.lamp = new MyLamp(this, 8, 20);
 		this.clock = new MyClock(this, 12);
+		this.paperplane = new MyPaperPlane(this,12,4,8);
 
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -263,6 +264,15 @@ class LightingScene extends CGFscene
 			this.clock.display();
 		this.popMatrix();
 
+		// paper Plane
+		this.pushMatrix();
+				this.translate(this.paperplane.x_position,
+					 this.paperplane.y_position,
+					 this.paperplane.z_position);
+				this.rotate(this.paperplane.rotZ * degToRad, 0, 0, 1);
+				this.rotate(this.paperplane.rotX * degToRad, 1, 0, 0);
+			this.paperplane.display();
+		this.popMatrix();
 		// ---- END Scene drawing section
 	};
 

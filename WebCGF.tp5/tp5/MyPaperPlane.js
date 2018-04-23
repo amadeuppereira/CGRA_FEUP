@@ -69,15 +69,19 @@ class MyPaperPlane extends CGFobject {
 
   update(deltaTime) {
     if (this.flag == 0) //para ignorar o primeiro deltaTime que vai ser igual ao currTime
-  		this.flag = 1
+  		this.flag = 1;
     else if (this.x_position > 1.6) {
       this.x_position -= (deltaTime * (6/1000));
       this.y_position += (deltaTime * (0.5/1000));
     }
-    else if (this.y_position > 0) {
+    else if (this.y_position > 0.125) {
       this.y_position -= (deltaTime *(6/1000));
-      this.rotZ += (deltaTime * 2/10);
+      this.rotZ += (deltaTime * 2.5/10);
       this.rotX += (deltaTime * 5/10);
+    }
+    else {
+      this.rotZ = 180;
+      this.rotX = 0;
     }
   };
 };

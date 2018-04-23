@@ -285,6 +285,7 @@ class LightingScene extends CGFscene
 		this.deltaTime = currTime - this.lastTime;
 		this.lastTime = currTime;
 
+		this.paperplane.update(this.deltaTime);
 		this.clock.update(this.deltaTime);
 	};
 };

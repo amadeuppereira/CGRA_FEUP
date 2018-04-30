@@ -40,8 +40,9 @@ class MyTrapezium extends CGFobject {
 
 		// right face
 		this.scene.pushMatrix();
-		this.scene.rotate(-90 * degToRad, 0, -25 * degToRad, 0);
-		this.scene.translate(0, 0, 2);
+		this.scene.rotate(-90 * degToRad, 0, 1, 0);
+    this.scene.rotate(-45 * degToRad, 1, 0, 0);
+		this.scene.translate(0, -0.5, 0.7);
 		this.quad.display();
 		this.scene.popMatrix();
 

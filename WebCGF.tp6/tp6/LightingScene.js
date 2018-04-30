@@ -34,6 +34,13 @@ class LightingScene extends CGFscene
 
 		this.axis = new CGFaxis(this);
 
+		//Interface elements
+		this.light0 = false;
+		this.light1 = false;
+		this.light2 = false;
+		this.light3 = false
+		this.speed = 3;
+
 		// Scene elements
 		this.car = new MyVehicle(this);
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS);
@@ -112,7 +119,36 @@ class LightingScene extends CGFscene
 		this.lights[0].setAmbient(0, 0, 0, 1);
 		this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
 		this.lights[0].setSpecular(1.0, 1.0, 1.0, 1)
-		this.lights[0].enable();
+		if(this.light0)
+			this.lights[0].enable();
+		
+
+		this.lights[1].setPosition(9, 6, 1, 1);
+		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+
+		this.lights[1].setAmbient(0, 0, 0, 1);
+		this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.lights[1].setSpecular(1.0, 1.0, 1.0, 1)
+		if(this.light1)
+			this.lights[1].enable();
+
+		this.lights[2].setPosition(4, 6, 6, 1);
+		this.lights[2].setVisible(true); // show marker on light position (different from enabled)
+
+		this.lights[2].setAmbient(0, 0, 0, 1);
+		this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.lights[2].setSpecular(1.0, 1.0, 1.0, 1)
+		if(this.light2)
+			this.lights[2].enable();
+
+		this.lights[3].setPosition(9, 6, 6, 1);
+		this.lights[3].setVisible(true); // show marker on light position (different from enabled)
+
+		this.lights[3].setAmbient(0, 0, 0, 1);
+		this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.lights[3].setSpecular(1.0, 1.0, 1.0, 1)
+		if(this.light3)
+			this.lights[3].enable();
 
 	};
 
@@ -272,4 +308,8 @@ class LightingScene extends CGFscene
 		// this.paperplane.update(this.deltaTime);
 		// this.clock.update(this.deltaTime);
 	};
+
+	doSomething() {
+		console.log("Doing something...");
+	}
 };

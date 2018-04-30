@@ -23,7 +23,7 @@ class MyWheel extends CGFobject {
 			this.front.display();
 		this.scene.popMatrix();
 
-    this.materialDefault.apply();
+    //this.materialDefault.apply();
 
     this.scene.pushMatrix();
       this.scene.rotate(Math.PI, 0, 1, 0);

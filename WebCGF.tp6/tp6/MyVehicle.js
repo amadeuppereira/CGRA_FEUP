@@ -9,6 +9,7 @@ class MyVehicle extends CGFobject {
   constructor(scene) {
     super(scene);
 
+    this.trapezium = new MyTrapezium(this.scene);
     this.chassi = new MyUnitCubeQuad(this.scene);
     this.wheel_front_left = new MyWheel(this.scene, 8, 20);
     this.wheel_front_right = new MyWheel(this.scene, 8, 20);
@@ -17,6 +18,13 @@ class MyVehicle extends CGFobject {
   };
 
   display(){
+    //MyTrapezium
+    this.scene.pushMatrix();
+    this.scene.translate(0,0,5);
+    //this.scene.scale(4, 1.2, 2);
+    this.trapezium.display();
+    this.scene.popMatrix();
+
     //Chassi
     this.scene.pushMatrix();
     this.scene.translate(1.5,0.5,1.45);

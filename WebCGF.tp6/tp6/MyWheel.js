@@ -17,13 +17,10 @@ class MyWheel extends CGFobject {
   };
 
   display() {
-
     this.scene.pushMatrix();
 			this.scene.translate(0,0,1);
 			this.front.display();
 		this.scene.popMatrix();
-
-    //this.materialDefault.apply();
 
     this.scene.pushMatrix();
       this.scene.rotate(Math.PI, 0, 1, 0);

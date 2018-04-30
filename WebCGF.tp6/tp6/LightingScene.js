@@ -26,7 +26,7 @@ class LightingScene extends CGFscene
 
 		this.enableTextures(true);
 
-		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		this.gl.clearColor(0.529, 0.808, 0.922, 1.0);
 		this.gl.clearDepth(100.0);
 		this.gl.enable(this.gl.DEPTH_TEST);
 		this.gl.enable(this.gl.CULL_FACE);
@@ -52,7 +52,7 @@ class LightingScene extends CGFscene
 		// this.boardB = new Plane(this, BOARD_B_DIVISIONS);
 
 		// Materials
-		this.materialDefault = new CGFappearance(this);
+		 this.materialDefault = new CGFappearance(this);
 
 		// this.slidesAppearance = new CGFappearance(this);
 		// this.slidesAppearance.setAmbient(0.3,0.3,0.3,1);
@@ -245,14 +245,17 @@ class LightingScene extends CGFscene
 		// 		this.rotate(this.paperplane.rotX * degToRad, 1, 0, 0);
 		// 	this.paperplane.display();
 		// this.popMatrix();
+
+		
 		this.pushMatrix();
 		this.car.display();
 		this.popMatrix();
 
 		this.pushMatrix();
-		this.scale(10, 1, 1);
+		this.translate(5, 0, 5);
+		this.scale(10, 1, 10);
 		this.rotate(-90*degToRad, 1, 0, 0);
-		//this.terrain.display();
+		this.terrain.display();
 		this.popMatrix();
 		// ---- END Scene drawing section
 	};

@@ -5,6 +5,7 @@ var BOARD_HEIGHT = 4.0;
 
 var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
+var TERRAIN_DIVISIONS = 50;
 
 var FPS = 60;
 
@@ -35,6 +36,7 @@ class LightingScene extends CGFscene
 
 		// Scene elements
 		this.car = new MyVehicle(this);
+		this.terrain = new MyTerrain(this, 50);
 		// this.table = new MyTable(this);
 		// this.wall = new Plane(this);
 		// this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
@@ -104,43 +106,14 @@ class LightingScene extends CGFscene
 	{
 		this.setGlobalAmbientLight(0.3, 0.3, 0.3, 1.0);
 
-		// Positions for four lights
 		this.lights[0].setPosition(4, 6, 1, 1);
 		this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 
-		this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-
-		this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
-		this.lights[2].setVisible(true); // show marker on light position (different from enabled)
-
-		this.lights[3].setPosition(4, 6, 5, 1);
-		this.lights[3].setVisible(true); // show marker on light position (different from enabled)
-
 		this.lights[0].setAmbient(0, 0, 0, 1);
 		this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[0].setSpecular(1.0, 1.0, 0, 1)
+		this.lights[0].setSpecular(1.0, 1.0, 1.0, 1)
 		this.lights[0].enable();
 
-		this.lights[1].setAmbient(0, 0, 0, 1);
-		this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[1].enable();
-
-		this.lights[2].setAmbient(0, 0, 0, 1);
-		this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[2].setSpecular(1.0, 1.0, 1.0, 1)
-		this.lights[2].setConstantAttenuation(0);
-		this.lights[2].setLinearAttenuation(1);
-		this.lights[2].setQuadraticAttenuation(0);
-		this.lights[2].enable();
-
-		this.lights[3].setAmbient(0, 0, 0, 1);
-		this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[3].setSpecular(1.0, 1.0, 0, 1)
-		this.lights[3].setConstantAttenuation(0);
-		this.lights[3].setLinearAttenuation(0);
-		this.lights[3].setQuadraticAttenuation(1);
-	  this.lights[3].enable();
 	};
 
 	updateLights()
@@ -273,7 +246,13 @@ class LightingScene extends CGFscene
 		// 	this.paperplane.display();
 		// this.popMatrix();
 		this.pushMatrix();
-		this.car.display();
+		//this.car.display();
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.scale(10, 1, 1);
+		//this.rotate()
+		this.terrain.display();
 		this.popMatrix();
 		// ---- END Scene drawing section
 	};

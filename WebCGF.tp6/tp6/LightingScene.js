@@ -52,7 +52,7 @@ class LightingScene extends CGFscene
 		// this.boardB = new Plane(this, BOARD_B_DIVISIONS);
 
 		// Materials
-		// this.materialDefault = new CGFappearance(this);
+		this.materialDefault = new CGFappearance(this);
 
 		// this.slidesAppearance = new CGFappearance(this);
 		// this.slidesAppearance.setAmbient(0.3,0.3,0.3,1);
@@ -144,7 +144,7 @@ class LightingScene extends CGFscene
 		// Draw axis
 		this.axis.display();
 
-		// this.materialDefault.apply();
+		this.materialDefault.apply();
 
 		// ---- END Background, camera and axis setup
 

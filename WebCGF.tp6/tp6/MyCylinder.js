@@ -21,11 +21,6 @@ class MyCylinder extends CGFobject {
 
   this.getVertices();
 
-  // console.log(this.normals);
-  // console.log(this.vertices.length);
-  // console.log(this.indices.length);
-  // console.log(this.normals.length);
-
   this.primitiveType = this.scene.gl.TRIANGLES;
 
   this.initGLBuffers();

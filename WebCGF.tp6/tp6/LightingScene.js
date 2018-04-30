@@ -36,7 +36,7 @@ class LightingScene extends CGFscene
 
 		// Scene elements
 		this.car = new MyVehicle(this);
-		this.terrain = new MyTerrain(this, 50);
+		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS);
 		// this.table = new MyTable(this);
 		// this.wall = new Plane(this);
 		// this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
@@ -246,13 +246,13 @@ class LightingScene extends CGFscene
 		// 	this.paperplane.display();
 		// this.popMatrix();
 		this.pushMatrix();
-		//this.car.display();
+		this.car.display();
 		this.popMatrix();
 
 		this.pushMatrix();
 		this.scale(10, 1, 1);
-		//this.rotate()
-		this.terrain.display();
+		this.rotate(-90*degToRad, 1, 0, 0);
+		//this.terrain.display();
 		this.popMatrix();
 		// ---- END Scene drawing section
 	};

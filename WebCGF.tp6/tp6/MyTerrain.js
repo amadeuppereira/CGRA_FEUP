@@ -8,7 +8,7 @@ class MyTerrain extends Plane
    {
        super(scene, nrDivs, 0, 10, 0, 12);
        this.terrainAppearance = new CGFappearance(scene);
-       this.terrainAppearance.loadTexture("../resources/images/floor.png");
+       this.terrainAppearance.loadTexture("../resources/images/terrainFloor.png");
 
    };
 

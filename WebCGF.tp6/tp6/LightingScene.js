@@ -150,6 +150,13 @@ class LightingScene extends CGFscene
 		if(this.light3)
 			this.lights[3].enable();
 
+		
+		//apagar
+		this.lights[0].enable();
+		this.lights[1].enable();
+		this.lights[2].enable();
+		this.lights[3].enable();
+
 	};
 
 	updateLights()
@@ -281,9 +288,9 @@ class LightingScene extends CGFscene
 		// 		this.rotate(this.paperplane.rotX * degToRad, 1, 0, 0);
 		// 	this.paperplane.display();
 		// this.popMatrix();
-
 		
 		this.pushMatrix();
+		this.translate(3,0.5,3);
 		this.car.display();
 		this.popMatrix();
 

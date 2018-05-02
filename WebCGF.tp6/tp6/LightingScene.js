@@ -35,10 +35,10 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		//Interface elements
-		this.light0 = false;
-		this.light1 = false;
-		this.light2 = false;
-		this.light3 = false
+		this.light0 = true;
+		this.light1 = true;
+		this.light2 = true;
+		this.light3 = true;
 		this.speed = 3;
 
 		// Scene elements

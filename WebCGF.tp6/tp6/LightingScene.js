@@ -5,7 +5,7 @@ var BOARD_HEIGHT = 4.0;
 
 var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
-var TERRAIN_DIVISIONS = 50;
+var TERRAIN_DIVISIONS = 8;
 
 var FPS = 60;
 
@@ -44,7 +44,19 @@ class LightingScene extends CGFscene
 
 		// Scene elements
 		this.car = new MyVehicle(this);
-		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS);
+
+		this.altimetry= [[ 2.0 , 3.0 , 2.0, 4.0, 2.5, 2.4, 2.3, 1.3, 0.3 ],
+						 [ 2.0 , 3.0 , 2.0, 4.0, 7.5, 6.4, 4.3, 1.3, 0.3 ],
+					     [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+                         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+					     [ 0.0 , 0.0 , 2.0, 4.0, 2.5, 2.4, 0.0, 0.0, 0.0 ],
+						 [ 0.0 , 0.0 , 2.0, 4.0, 3.5, 2.4, 0.0, 0.0, 0.0 ],
+						 [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+						 [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+						 [ 2.0 , 3.0 , 2.0, 1.0, 2.5, 2.4, 2.3, 1.3, 0.3 ]
+						];
+
+		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
 		// this.table = new MyTable(this);
 		// this.wall = new Plane(this);
 		// this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);

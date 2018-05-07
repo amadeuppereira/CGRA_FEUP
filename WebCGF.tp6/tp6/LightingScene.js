@@ -39,6 +39,7 @@ class LightingScene extends CGFscene
 		this.light1 = true;
 		this.light2 = true;
 		this.light3 = true;
+		this.eixos = true;
 		this.speed = 3;
 
 		// Scene elements
@@ -205,7 +206,8 @@ class LightingScene extends CGFscene
 		this.updateLights();
 
 		// Draw axis
-		this.axis.display();
+		if(this.eixos)
+			this.axis.display();
 
 		this.materialDefault.apply();
 

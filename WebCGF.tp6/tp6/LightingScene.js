@@ -163,13 +163,6 @@ class LightingScene extends CGFscene
 		if(this.light3)
 			this.lights[3].enable();
 
-		
-		//apagar
-		this.lights[0].enable();
-		this.lights[1].enable();
-		this.lights[2].enable();
-		this.lights[3].enable();
-
 	};
 
 	updateLights()

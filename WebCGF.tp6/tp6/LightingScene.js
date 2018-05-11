@@ -13,6 +13,8 @@ var car_position_x = 3;
 var car_position_z = 3;
 var car_acceletarion = 0;
 var turning = false;
+var directions = ["none","left","right"];
+var currentDirection = directions[0];
 
 class LightingScene extends CGFscene
 {
@@ -250,13 +252,13 @@ class LightingScene extends CGFscene
 			car_acceletarion += 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyA")){
-			turning = true;
+			currentDirection = directions[1];
 		}
 		else if (this.gui.isKeyPressed("KeyD")){
-			turning = true;
+			currentDirection = directions[2];
 		}
 		else{
-			turning = false;
+			currentDirection = directions[0];
 		}
 		
 	}
@@ -272,8 +274,8 @@ class LightingScene extends CGFscene
 
 		car_position_x += car_acceletarion;
 		this.checkKeys();
-		//turning = turning;
-		this.car.update(this.deltaTime, car_acceletarion, turning);
+		
+		this.car.update(this.deltaTime, car_acceletarion, currentDirection);
 	};
 
 	doSomething() {

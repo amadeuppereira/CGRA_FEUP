@@ -31,17 +31,19 @@ class MyVehicle extends CGFobject {
 
     //Front Left Wheel
     this.scene.pushMatrix();
+    //this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.translate(0,0,2.3);
-    this.scene.rotate(this.wheelRotate, 0, 1, 0);
+    //this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.scale(0.5, 0.5, 0.6);
+    this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.wheel.display();
     this.scene.popMatrix();
 
     //Front Right Wheel
     this.scene.pushMatrix();
-    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.rotate(this.wheelRotate, 0, 1, 0);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.scale(0.5, 0.5, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
@@ -125,10 +127,15 @@ class MyVehicle extends CGFobject {
     this.scene.popMatrix();
     }
 
-  update(deltaTime, car_acceleration, turning) {
+  update(deltaTime, car_acceleration, currentDirection) {
     this.wheelMovement -= (car_acceleration * 7/10);
     
-    if(turning){
+    if(currentDirection == "left"){
+      if(this.wheelRotate <= 0.4)
+        this.wheelRotate += (deltaTime * 3/ 1000);
+    }
+    if(currentDirection == "right"){
+      if(this.wheelRotate >= -0.4)
       this.wheelRotate -= (deltaTime * 3/ 1000);
     }
   };

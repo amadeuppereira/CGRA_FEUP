@@ -9,6 +9,10 @@ var TERRAIN_DIVISIONS = 8;
 
 var FPS = 60;
 
+var car_position_x = 3;
+var car_position_z = 3;
+var car_acceletarion = 0;
+
 class LightingScene extends CGFscene
 {
 	constructor()
@@ -219,116 +223,32 @@ class LightingScene extends CGFscene
 		// ---- END Background, camera and axis setup
 
 		// ---- BEGIN Scene drawing section
-
-		// Floor
-		// this.pushMatrix();
-		// 	this.translate(7.5, 0, 7.5);
-		// 	this.rotate(-90 * degToRad, 1, 0, 0);
-		// 	this.scale(15, 15, 0.2);
-		// 	this.floorAppearance.apply();
-		// 	this.floor.display();
-		// this.popMatrix();
-
-		// Left Wall
-		// this.pushMatrix();
-		// 	this.translate(0, 4, 7.5);
-		// 	this.rotate(90 * degToRad, 0, 1, 0);
-		// 	this.scale(15, 8, 0.2);
-		// 	this.windowAppearance.apply();
-		// 	this.leftWall.display();
-		// this.popMatrix();
-
-		// Plane Wall
-		// this.pushMatrix();
-		// 	this.translate(7.5, 4, 0);
-		// 	this.scale(15, 8, 0.2);
-		// 	this.materialWall.apply();
-		// 	this.wall.display();
-		// this.popMatrix();
-
-		// First Table
-		// this.pushMatrix();
-		// 	this.translate(5, 0, 8);
-		// 	this.table.display();
-		// this.popMatrix();
-
-		// Second Table
-		// this.pushMatrix();
-		// 	this.translate(12, 0, 8);
-		// 	this.table.display();
-		// this.popMatrix();
-
-		// Board A
-		// this.pushMatrix();
-		// 	this.translate(4, 4.5, 0.2);
-		// 	this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
-		//
-		// 	this.slidesAppearance.apply();
-		// 	this.boardA.display();
-		// this.popMatrix();
-
-		// Board B
-		// this.pushMatrix();
-		// 	this.translate(10.5, 4.5, 0.2);
-		// 	this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
-		//
-		// 	this.boardAppearance.apply();
-		// 	this.boardB.display();
-		// this.popMatrix();
-
-		// prism
-		// this.pushMatrix();
-		// 	this.scale(1, 10, 1);
-		// 	this.rotate(-90*degToRad, 1, 0, 0);
-		// 	//this.prism.display();
-		// this.popMatrix();
-
-		// cylinder
-		// this.pushMatrix();
-		// 	this.translate(14, 0, 14);
-		// 	this.scale(1, 8, 1);
-		// 	this.rotate(-90*degToRad, 1, 0, 0);
-		// 	this.cylinderAppearance.apply();
-		// 	this.cylinder.display();
-		// this.popMatrix();
-
-		// lamp
-		// this.pushMatrix();
-		// 	this.translate(7.5, 8, 7.5);
-		// 	this.rotate(90*degToRad, 1, 0, 0);
-		// 	this.lamp.display();
-		// this.popMatrix();
-
-		// clock
-		// this.pushMatrix();
-		// 	this.translate(7.25, 7.25, 0);
-		// 	this.scale(0.7, 0.7, 0.15);
-		// 	this.clock.display();
-		// this.popMatrix();
-
-		// paper Plane
-		// this.pushMatrix();
-		// 		this.translate(this.paperplane.x_position,
-		// 			 this.paperplane.y_position,
-		// 			 this.paperplane.z_position);
-		// 		this.rotate(this.paperplane.rotZ * degToRad, 0, 0, 1);
-		// 		this.rotate(this.paperplane.rotX * degToRad, 1, 0, 0);
-		// 	this.paperplane.display();
-		// this.popMatrix();
 		
+		//Car
 		this.pushMatrix();
-		this.translate(3,0.5,3);
+		this.translate(car_position_x,0.5,car_position_z);
 		this.car.display();
 		this.popMatrix();
 
+		//Terrain
 		this.pushMatrix();
 		this.translate(5, 0, 5);
 		this.scale(10, 1, 10);
 		this.rotate(-90*degToRad, 1, 0, 0);
 		this.terrain.display();
 		this.popMatrix();
+
 		// ---- END Scene drawing section
 	};
+
+	checkKeys(){
+		if (this.gui.isKeyPressed("KeyW")){
+			car_acceletarion -= 0.01;
+		}
+		if (this.gui.isKeyPressed("KeyS")){
+			car_acceletarion += 0.01;
+		}
+	}
 
 	update(currTime) {
 		var today = new Date();
@@ -339,8 +259,10 @@ class LightingScene extends CGFscene
 		this.deltaTime = currTime - this.lastTime;
 		this.lastTime = currTime;
 
-		// this.paperplane.update(this.deltaTime);
-		// this.clock.update(this.deltaTime);
+		car_position_x += car_acceletarion;
+		this.checkKeys();
+
+		this.car.update(this.deltaTime, car_acceletarion);
 	};
 
 	doSomething() {

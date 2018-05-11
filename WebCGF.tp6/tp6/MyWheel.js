@@ -9,6 +9,9 @@ class MyWheel extends CGFobject {
     this.slices = slices;
     this.stacks = stacks;
 
+    this.rotZ = -6;
+    this.rotX = 0;
+
     this.front = new MyCircle(scene, 12);
     this.back = new MyCircle(scene, 12);
     this.sides = new MyCylinder(scene, 12, 1);
@@ -45,9 +48,5 @@ class MyWheel extends CGFobject {
 
     this.wheel2Appearance.apply();
     this.sides.display();
-  };
-
-  update(deltaTime) {
-
   };
 };

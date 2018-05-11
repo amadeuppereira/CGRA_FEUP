@@ -12,6 +12,7 @@ var FPS = 60;
 var car_position_x = 3;
 var car_position_z = 3;
 var car_acceletarion = 0;
+var turning = false;
 
 class LightingScene extends CGFscene
 {
@@ -248,6 +249,16 @@ class LightingScene extends CGFscene
 		if (this.gui.isKeyPressed("KeyS")){
 			car_acceletarion += 0.01;
 		}
+		if (this.gui.isKeyPressed("KeyA")){
+			turning = true;
+		}
+		else if (this.gui.isKeyPressed("KeyD")){
+			turning = true;
+		}
+		else{
+			turning = false;
+		}
+		
 	}
 
 	update(currTime) {
@@ -261,8 +272,8 @@ class LightingScene extends CGFscene
 
 		car_position_x += car_acceletarion;
 		this.checkKeys();
-
-		this.car.update(this.deltaTime, car_acceletarion);
+		//turning = turning;
+		this.car.update(this.deltaTime, car_acceletarion, turning);
 	};
 
 	doSomething() {

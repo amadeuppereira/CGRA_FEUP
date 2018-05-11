@@ -9,7 +9,8 @@ class MyVehicle extends CGFobject {
   constructor(scene) {
     super(scene);
 
-    this.wheelRotation = 0;
+    this.wheelMovement = 0;
+    this.wheelRotate = 0;
     
     this.trapezium = new MyTrapezium(this.scene);
     this.wheel = new MyWheel(this.scene, 8, 20);
@@ -30,15 +31,17 @@ class MyVehicle extends CGFobject {
 
     //Front Left Wheel
     this.scene.pushMatrix();
-    this.scene.rotate(this.wheelRotation, 0, 0, 1);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.translate(0,0,2.3);
+    this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.scale(0.5, 0.5, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
 
     //Front Right Wheel
     this.scene.pushMatrix();
-    this.scene.rotate(this.wheelRotation, 0, 0, 1);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
+    this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.scale(0.5, 0.5, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
@@ -46,7 +49,7 @@ class MyVehicle extends CGFobject {
     //Back Left Wheel
     this.scene.pushMatrix();
     this.scene.translate(2.7,0.15,2.3);
-    this.scene.rotate(this.wheelRotation, 0, 0, 1);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.scale(0.6, 0.6, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
@@ -54,7 +57,7 @@ class MyVehicle extends CGFobject {
     //Back Right Wheel
     this.scene.pushMatrix();
     this.scene.translate(2.7,0.15,0);
-    this.scene.rotate(this.wheelRotation, 0, 0, 1);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.scale(0.6, 0.6, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
@@ -122,7 +125,11 @@ class MyVehicle extends CGFobject {
     this.scene.popMatrix();
     }
 
-  update(deltaTime, car_acceleration) {
-    this.wheelRotation -= (car_acceleration * 7/10);
+  update(deltaTime, car_acceleration, turning) {
+    this.wheelMovement -= (car_acceleration * 7/10);
+    
+    if(turning){
+      this.wheelRotate -= (deltaTime * 3/ 1000);
+    }
   };
 };

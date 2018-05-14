@@ -34,14 +34,6 @@ class LightingScene extends CGFscene
 
 		this.axis = new CGFaxis(this);
 
-		//Interface elements
-		this.light0 = true;
-		this.light1 = true;
-		this.light2 = true;
-		this.light3 = true;
-		this.eixos = true;
-		this.speed = 3;
-
 		// Scene elements
 		this.car = new MyVehicle(this);
 
@@ -57,62 +49,63 @@ class LightingScene extends CGFscene
 						];
 
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
-		// this.table = new MyTable(this);
-		// this.wall = new Plane(this);
-		// this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
-		// this.floor = new MyQuad(this, 0, 10, 0, 12);
-		//
-		// this.prism = new MyPrism(this, 8, 20);
-		// this.cylinder = new MyCylinder(this, 8, 20);
-		// this.lamp = new MyLamp(this, 8, 20);
-		// this.clock = new MyClock(this, 12);
-		// this.paperplane = new MyPaperPlane(this,12,4,8);
-		//
-		// this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
-		// this.boardB = new Plane(this, BOARD_B_DIVISIONS);
+		this.cylinder = new MyCylinder(this, 12, 1);
+		this.trapezium = new MyTrapezium(this);
+		this.semicircle = new MyLamp(this, 8, 20);
 
 		// Materials
-		 this.materialDefault = new CGFappearance(this);
+		this.materialDefault = new CGFappearance(this);
+		
+		this.texture1 = new CGFappearance(this);
+		this.texture1.loadTexture("../resources/images/texture1.png");
+		this.texture1.setAmbient(0.6,0.6,0.9,1);
+    	this.texture1.setDiffuse(0.6,0.6,0.9,1);
+		this.texture1.setSpecular(0.1,0.1,0.1,1);
 
-		// this.slidesAppearance = new CGFappearance(this);
-		// this.slidesAppearance.setAmbient(0.3,0.3,0.3,1);
-		// this.slidesAppearance.setDiffuse(0.8,0.8,0.8,1);
-		// this.slidesAppearance.setSpecular(0.2,0.2,0.2,1);
-		// this.slidesAppearance.setShininess(10);
-		// this.slidesAppearance.loadTexture("../resources/images/slides.png");
-		// this.slidesAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+		this.texture2 = new CGFappearance(this);
+		this.texture2.loadTexture("../resources/images/texture2.png");
+		this.texture2.setAmbient(0.6,0.6,0.9,1);
+    	this.texture2.setDiffuse(0.6,0.6,0.9,1);
+		this.texture2.setSpecular(0.1,0.1,0.1,1);
 
-		// this.boardAppearance = new CGFappearance(this);
-		// this.boardAppearance.setAmbient(0.3,0.3,0.3,1);
-		// this.boardAppearance.setDiffuse(0.6,0.6,0.6,1);
-		// this.boardAppearance.setSpecular(0.8,0.8,0.8,1);
-		// this.boardAppearance.setShininess(120);
-		// this.boardAppearance.loadTexture("../resources/images/board.png");
+		this.texture3 = new CGFappearance(this);
+		this.texture3.loadTexture("../resources/images/texture3.png");
+		this.texture3.setAmbient(0.6,0.6,0.9,1);
+    	this.texture3.setDiffuse(0.6,0.6,0.9,1);
+		this.texture3.setSpecular(0.1,0.1,0.1,1);
 
-		// this.materialWall = new CGFappearance(this);
-    // this.materialWall.setAmbient(0.5,0.3,0.8,1);
-    // this.materialWall.setDiffuse(0.5,0.3,0.8,1);
-    // this.materialWall.setSpecular(0.1,0.1,0.1,1);
+		this.texture4 = new CGFappearance(this);
+		this.texture4.loadTexture("../resources/images/texture4.png");
+		this.texture4.setAmbient(0.6,0.6,0.9,1);
+    	this.texture4.setDiffuse(0.6,0.6,0.9,1);
+		this.texture4.setSpecular(0.1,0.1,0.1,1);
 
-		// this.floorAppearance = new CGFappearance(this);
-		// this.floorAppearance.setAmbient(0.6,0.6,0.9,1);
-		// this.floorAppearance.setDiffuse(0.6,0.6,0.9,1);
-		// this.floorAppearance.setSpecular(0.1,0.1,0.1,1);
-		// this.floorAppearance.setShininess(120);
-		// this.floorAppearance.loadTexture("../resources/images/floor.png");
+		this.objectsTexture = new CGFappearance(this);
+		this.objectsTexture.loadTexture("../resources/images/bandeiraPortugal.png");
+		this.objectsTexture.setAmbient(0.6,0.6,0.9,1);
+    	this.objectsTexture.setDiffuse(0.6,0.6,0.9,1);
+		this.objectsTexture.setSpecular(0.1,0.1,0.1,1);
 
-		// this.windowAppearance = new CGFappearance(this);
-    // this.windowAppearance.setAmbient(0.6,0.6,0.9,1);
-    // this.windowAppearance.setDiffuse(0.6,0.6,0.9,1);
-    // this.windowAppearance.setSpecular(0.1,0.1,0.1,1);
-		// this.windowAppearance.loadTexture("../resources/images/window.png");
-		// this.windowAppearance.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
+		//Interface elements
+		this.light0 = true;
+		this.light1 = true;
+		this.light2 = true;
+		this.light3 = true;
+		this.eixos = true;
+		this.speed = 3;
+		this.Cylinder = false;
+		this.Trapezium = false;
+		this.Semicircle = false;
 
-		// this.cylinderAppearance = new CGFappearance(this);
-		// this.cylinderAppearance.loadTexture("../resources/images/textura.png");
-		// this.cylinderAppearance.setAmbient(0.6,0.6,0.9,1);
-    // this.cylinderAppearance.setDiffuse(0.6,0.6,0.9,1);
-    // this.cylinderAppearance.setSpecular(0.1,0.1,0.1,1);
+		this.vehicleAppearances = [this.texture1, this.texture2, this.texture3, this.texture4];
+		this.vehicleAppearanceList = {
+			'LightMetal' : 0,
+			'DarkMetal' : 1,
+			'Red' : 2,
+			'Water' : 3
+		}
+		this.vehicleTexture = 'LightMetal';
+		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 
 		this.setUpdatePeriod(1000/FPS);
 	};
@@ -219,11 +212,36 @@ class LightingScene extends CGFscene
 		// ---- END Background, camera and axis setup
 
 		// ---- BEGIN Scene drawing section
+
+		//Objects
+		this.objectsTexture.apply();
+
+		this.pushMatrix();
+		this.rotate(90 * degToRad, 1, 0, 0);
+		this.translate(2,-2,-3);
+		this.scale(1,1,3);
+		if(this.Cylinder)
+			this.cylinder.display();
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.translate(8,0.5,-2);
+		if(this.Trapezium)
+			this.trapezium.display();
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.rotate(-90 * degToRad, 1, 0, 0);
+		this.translate(5,2,0);
+		if(this.Semicircle)
+			this.semicircle.display();
+		this.popMatrix();
 		
 		//Car
 		this.pushMatrix();
 		this.translate(this.car.car_position_x,0.5,this.car.car_position_z);
 		this.rotate(this.car.rotationY * degToRad, 0, 1, 0);
+		this.vehicleAppearances[this.currVehicleAppearance].apply();
 		this.car.display();
 		this.popMatrix();
 
@@ -267,7 +285,7 @@ class LightingScene extends CGFscene
 		this.lastTime = currTime;
 
 		this.checkKeys();
-		
+		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 		this.car.update(this.deltaTime);
 	};
 

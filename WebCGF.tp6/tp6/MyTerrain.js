@@ -15,7 +15,7 @@ class MyTerrain extends Plane
        else
         this.altimetry = altimetry;
 
-       this.applyAltimetry();
+       //this.applyAltimetry();
        
        this.terrainAppearance = new CGFappearance(scene);
        this.terrainAppearance.loadTexture("../resources/images/terrainFloor.png");

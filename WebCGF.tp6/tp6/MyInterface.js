@@ -59,6 +59,15 @@ class MyInterface extends CGFinterface {
 
 		this.gui.add(this.scene, 'eixos');
 
+		this.gui.add(this.scene, 'vehicleTexture', ['LightMetal', 'DarkMetal', 'Red', 'Water']);
+
+		var objects=this.gui.addFolder("Objetos");
+		objects.open();
+
+		objects.add(this.scene, 'Cylinder');
+		objects.add(this.scene, 'Trapezium');
+		objects.add(this.scene, 'Semicircle');
+
 		this.initKeys();
 		return true;
 	};

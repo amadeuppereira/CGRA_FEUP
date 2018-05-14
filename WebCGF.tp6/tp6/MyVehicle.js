@@ -26,6 +26,12 @@ class MyVehicle extends CGFobject {
     this.cube = new MyUnitCubeQuad(this.scene);
 
     this.materialDefault = new CGFappearance(scene);
+
+    this.car_window_texture = new CGFappearance(scene);
+    this.car_window_texture.loadTexture("../resources/images/car_window_texture.png");
+		this.car_window_texture.setAmbient(0.6,0.6,0.9,1);
+    this.car_window_texture.setDiffuse(0.6,0.6,0.9,1);
+		this.car_window_texture.setSpecular(0.1,0.1,0.1,1);
   };
 
   display(){
@@ -34,7 +40,68 @@ class MyVehicle extends CGFobject {
     this.scene.translate(-1.5,0.2,0);
     this.scene.scale(3, 0.7, 2);
 		this.trapezium.display();
-		this.scene.popMatrix();
+    this.scene.popMatrix();
+    
+    //Spoiler
+    this.scene.pushMatrix();
+    this.scene.translate(-0.4,0.5,-0.5);
+    this.scene.scale(0.06,0.3,0.06);
+    this.scene.rotate(-90 * degToRad,1,0,0);
+    this.cylinder.display();
+    this.scene.popMatrix();
+    
+    this.scene.pushMatrix();
+    this.scene.translate(-0.4,0.5,0.5);
+    this.scene.scale(0.06,0.3,0.06);
+    this.scene.rotate(-90 * degToRad,1,0,0);
+    this.cylinder.display();
+    this.scene.popMatrix();
+    
+    this.scene.pushMatrix();
+    this.scene.translate(-0.3,0.9,0);
+    this.scene.scale(0.4,0.2,2.5);
+    this.trapezium.display();
+    this.scene.popMatrix();
+
+    //Right Lamp
+    this.scene.pushMatrix();
+    this.scene.translate(-5.5,-0.05,-0.6);
+    this.scene.scale(0.25,0.1,0.25);
+    this.scene.rotate(-90 * degToRad, 0, 1, 0);
+    this.scene.rotate(-65 * degToRad, 1, 0, 0);
+    this.lamp.display();
+    this.scene.popMatrix();
+        
+    //Left Lamp
+    this.scene.pushMatrix();
+    this.scene.translate(-5.5,-0.05,0.6);
+    this.scene.scale(0.25,0.1,0.25);
+    this.scene.rotate(-90 * degToRad, 0, 1, 0);
+    this.scene.rotate(-65 * degToRad, 1, 0, 0);
+    this.lamp.display();
+    this.scene.popMatrix();
+    
+    //Windows
+    this.car_window_texture.apply();
+    this.scene.pushMatrix();
+    this.scene.translate(-2.5,0.65,0);
+    this.scene.scale(0.05,0.2,1);
+    this.cube.display();
+    this.scene.popMatrix();
+    
+    this.scene.pushMatrix();
+    this.scene.translate(-2.325,0.65,-0.5);
+    this.scene.scale(0.4,0.2,0.05);
+    this.scene.rotate(-180 * degToRad,0,1,0);
+    this.trapezium.display();
+    this.scene.popMatrix();
+    
+    this.scene.pushMatrix();
+    this.scene.translate(-2.325,0.65,0.5);
+    this.scene.scale(0.4,0.2,0.05);
+    this.scene.rotate(-180 * degToRad,0,1,0);
+    this.trapezium.display();
+    this.scene.popMatrix();
 
     //Front Left Wheel
     this.scene.pushMatrix();
@@ -86,50 +153,6 @@ class MyVehicle extends CGFobject {
 		this.scene.rotate(-90 * degToRad, 0, 1, 0);
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
     this.lamp.display();
-    this.scene.popMatrix();
-
-    this.materialDefault.apply();
-
-    //Spoiler
-    this.scene.pushMatrix();
-    this.scene.translate(-0.4,0.5,-0.5);
-    this.scene.scale(0.06,0.3,0.06);
-    this.scene.rotate(-90 * degToRad,1,0,0);
-    this.cylinder.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(-0.4,0.5,0.5);
-    this.scene.scale(0.06,0.3,0.06);
-    this.scene.rotate(-90 * degToRad,1,0,0);
-    this.cylinder.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(-0.3,0.9,0);
-    this.scene.scale(0.4,0.2,2.5);
-    this.trapezium.display();
-    this.scene.popMatrix();
-
-    //Windows
-    this.scene.pushMatrix();
-    this.scene.translate(-2.5,0.65,0);
-    this.scene.scale(0.05,0.2,1);
-    this.cube.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(-2.325,0.65,-0.5);
-    this.scene.scale(0.4,0.2,0.05);
-    this.scene.rotate(-180 * degToRad,0,1,0);
-    this.trapezium.display();
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    this.scene.translate(-2.325,0.65,0.5);
-    this.scene.scale(0.4,0.2,0.05);
-    this.scene.rotate(-180 * degToRad,0,1,0);
-    this.trapezium.display();
     this.scene.popMatrix();
     }
 

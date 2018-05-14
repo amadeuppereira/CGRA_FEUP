@@ -20,12 +20,6 @@ class MyLamp extends CGFobject {
 
   this.getVertices();
 
-
-  // console.log(this.normals);
-  // console.log(this.vertices.length / 3);
-  // console.log(this.indices);
-  // console.log(this.normals.length);
-
   this.primitiveType = this.scene.gl.TRIANGLES;
 
   this.initGLBuffers();
@@ -52,25 +46,19 @@ class MyLamp extends CGFobject {
 
         if(k == this.stacks && k != 0 && i != 0) {
           this.indices.push(this.slices*k, this.slices*(k-1) + i - 1, this.slices*(k-1) + i);
-          //console.log((this.slices*k).toString() + " - " + (this.slices*(k-1) + i - 1).toString() + " - " + (this.slices*(k-1) + i).toString());
 
           if(i == this.slices - 1) {
             this.indices.push(this.slices*(k-1) + i, this.slices*(k-1), this.slices*k);
-            //console.log((this.slices*(k-1) + i).toString() + " - " + (this.slices*(k-1)).toString() + " - " + (this.slices*k).toString());
           }
         }
 
         else if(k != 0 && i != 0) {
           this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i - 1, this.slices*(k-1) + i);
           this.indices.push(this.slices*k + i - 1, this.slices*(k-1) + i , this.slices*k + i);
-          // console.log((this.slices*k + i - 1).toString() + " - " +(this.slices*(k-1) + i - 1).toString() + " - " + (this.slices*(k-1) + i).toString());
-          // console.log((this.slices*k + i - 1).toString()+ " - " + (this.slices*(k-1) + i).toString() + " - " + (this.slices*k + i).toString());
 
           if(i == this.slices - 1) {
 						this.indices.push(this.slices*(k-1) + i, this.slices*(k-1), this.slices*k + i);
 						this.indices.push(this.slices*k + i, this.slices*(k-1), this.slices*k);
-            // console.log((this.slices*(k-1) + i).toString()+ " - " + (this.slices*(k-1)).toString()+ " - " + (this.slices*k + i).toString());
-            // console.log((this.slices*k + i).toString()+ " - " + (this.slices*(k-1)).toString()+ " - " + (this.slices*k).toString());
           }
 				}
 

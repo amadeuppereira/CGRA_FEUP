@@ -9,18 +9,17 @@ var TERRAIN_DIVISIONS = 8;
 
 var FPS = 60;
 
-var car_position_x = 3;
-var car_position_z = 3;
-var car_acceletarion = 0;
-var turning = false;
 var directions = ["none","left","right"];
 var currentDirection = directions[0];
+var rotationY = 0;
 
 class LightingScene extends CGFscene
 {
 	constructor()
 	{
 		super();
+		this.car_position_x = 3;
+		this.car_position_z = 3;
 	};
 
 	init(application)
@@ -229,7 +228,10 @@ class LightingScene extends CGFscene
 		
 		//Car
 		this.pushMatrix();
-		this.translate(car_position_x,0.5,car_position_z);
+		if(this.car.car_acceletarion != 0){
+			this.rotate(rotationY*5*degToRad,0,1,0);
+		}
+		this.translate(this.car_position_x,0.5,this.car_position_z);
 		this.car.display();
 		this.popMatrix();
 
@@ -246,10 +248,10 @@ class LightingScene extends CGFscene
 
 	checkKeys(){
 		if (this.gui.isKeyPressed("KeyW")){
-			car_acceletarion -= 0.01;
+			this.car.car_acceleration -= 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyS")){
-			car_acceletarion += 0.01;
+			this.car.car_acceleration += 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyA")){
 			currentDirection = directions[1];
@@ -272,10 +274,11 @@ class LightingScene extends CGFscene
 		this.deltaTime = currTime - this.lastTime;
 		this.lastTime = currTime;
 
-		car_position_x += car_acceletarion;
 		this.checkKeys();
 		
-		this.car.update(this.deltaTime, car_acceletarion, currentDirection);
+		this.car.update(this.deltaTime, currentDirection);
+		this.car_position_x = this.car.x;
+		this.car_position_z = this.car.z;
 	};
 
 	doSomething() {

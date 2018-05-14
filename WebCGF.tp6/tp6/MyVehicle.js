@@ -11,6 +11,10 @@ class MyVehicle extends CGFobject {
 
     this.wheelMovement = 0;
     this.wheelRotate = 0;
+    this.car_acceleration = 0;
+
+    this.x = 3;
+    this.z = 3;
     
     this.trapezium = new MyTrapezium(this.scene);
     this.wheel = new MyWheel(this.scene, 8, 20);
@@ -31,12 +35,10 @@ class MyVehicle extends CGFobject {
 
     //Front Left Wheel
     this.scene.pushMatrix();
-    //this.scene.rotate(this.wheelRotate, 0, 1, 0);
-    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.translate(0,0,2.3);
-    //this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.scale(0.5, 0.5, 0.6);
     this.scene.rotate(this.wheelRotate, 0, 1, 0);
+    this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.wheel.display();
     this.scene.popMatrix();
 
@@ -127,8 +129,9 @@ class MyVehicle extends CGFobject {
     this.scene.popMatrix();
     }
 
-  update(deltaTime, car_acceleration, currentDirection) {
-    this.wheelMovement -= (car_acceleration * 7/10);
+  update(deltaTime, currentDirection) {
+    this.x += (this.car_acceleration * deltaTime * 1/50);
+    this.wheelMovement -= (this.car_acceleration * deltaTime * 1/50);
     
     if(currentDirection == "left"){
       if(this.wheelRotate <= 0.4)
@@ -137,6 +140,14 @@ class MyVehicle extends CGFobject {
     if(currentDirection == "right"){
       if(this.wheelRotate >= -0.4)
       this.wheelRotate -= (deltaTime * 3/ 1000);
+    }
+    if(currentDirection == "none"){
+      if(this.wheelRotate > 0.02)
+        this.wheelRotate -= (deltaTime * 2/ 1000);
+      else if(this.wheelRotate < -0.02)
+        this.wheelRotate += (deltaTime * 2/ 1000);
+      else
+        this.wheelRotate = 0;
     }
   };
 };

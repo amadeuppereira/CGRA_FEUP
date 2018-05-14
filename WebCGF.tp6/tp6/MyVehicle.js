@@ -13,8 +13,11 @@ class MyVehicle extends CGFobject {
     this.wheelRotate = 0;
     this.car_acceleration = 0;
 
-    this.x = 3;
-    this.z = 3;
+    this.car_position_x = 7;
+    this.car_position_z = 3;
+    this.rotationY = 0;
+    this.currentDirection = "none";
+
     
     this.trapezium = new MyTrapezium(this.scene);
     this.wheel = new MyWheel(this.scene, 8, 20);
@@ -28,14 +31,14 @@ class MyVehicle extends CGFobject {
   display(){
     //Chassi
     this.scene.pushMatrix();
-    this.scene.translate(2,0.2,1.45);
+    this.scene.translate(-1.5,0.2,0);
     this.scene.scale(3, 0.7, 2);
 		this.trapezium.display();
 		this.scene.popMatrix();
 
     //Front Left Wheel
     this.scene.pushMatrix();
-    this.scene.translate(0,0,2.3);
+    this.scene.translate(-3.7,0,0.85);
     this.scene.scale(0.5, 0.5, 0.6);
     this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.rotate(this.wheelMovement, 0, 0, 1);
@@ -44,15 +47,16 @@ class MyVehicle extends CGFobject {
 
     //Front Right Wheel
     this.scene.pushMatrix();
+    this.scene.translate(-3.7,0,-1.45);
+    this.scene.scale(0.5, 0.5, 0.6);
     this.scene.rotate(this.wheelRotate, 0, 1, 0);
     this.scene.rotate(this.wheelMovement, 0, 0, 1);
-    this.scene.scale(0.5, 0.5, 0.6);
     this.wheel.display();
     this.scene.popMatrix();
 
     //Back Left Wheel
     this.scene.pushMatrix();
-    this.scene.translate(2.7,0.15,2.3);
+    this.scene.translate(-1,0.15,0.85);
     this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.scale(0.6, 0.6, 0.6);
     this.wheel.display();
@@ -60,7 +64,7 @@ class MyVehicle extends CGFobject {
 
     //Back Right Wheel
     this.scene.pushMatrix();
-    this.scene.translate(2.7,0.15,0);
+    this.scene.translate(-1,0.15,-1.45);
     this.scene.rotate(this.wheelMovement, 0, 0, 1);
     this.scene.scale(0.6, 0.6, 0.6);
     this.wheel.display();
@@ -68,19 +72,19 @@ class MyVehicle extends CGFobject {
 
     //Right Lamp
     this.scene.pushMatrix();
+    this.scene.translate(-5.5,-0.05,-0.6);
     this.scene.scale(0.25,0.1,0.25);
 		this.scene.rotate(-90 * degToRad, 0, 1, 0);
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
-    this.scene.translate(3.5,-7,3);
     this.lamp.display();
     this.scene.popMatrix();
 
     //Left Lamp
     this.scene.pushMatrix();
+    this.scene.translate(-5.5,-0.05,0.6);
     this.scene.scale(0.25,0.1,0.25);
 		this.scene.rotate(-90 * degToRad, 0, 1, 0);
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
-    this.scene.translate(8,-7,3);
     this.lamp.display();
     this.scene.popMatrix();
 
@@ -88,64 +92,72 @@ class MyVehicle extends CGFobject {
 
     //Spoiler
     this.scene.pushMatrix();
+    this.scene.translate(-0.4,0.5,-0.5);
     this.scene.scale(0.06,0.3,0.06);
     this.scene.rotate(-90 * degToRad,1,0,0);
-    this.scene.translate(50,-15,1.8);
     this.cylinder.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.translate(-0.4,0.5,0.5);
     this.scene.scale(0.06,0.3,0.06);
     this.scene.rotate(-90 * degToRad,1,0,0);
-    this.scene.translate(50,-33,1.8);
     this.cylinder.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.translate(-0.3,0.9,0);
     this.scene.scale(0.4,0.2,2.5);
-    this.scene.translate(8,4.7,0.58);
     this.trapezium.display();
     this.scene.popMatrix();
 
     //Windows
     this.scene.pushMatrix();
+    this.scene.translate(-2.5,0.65,0);
     this.scene.scale(0.05,0.2,1);
-    this.scene.translate(16,3.2,1.45);
     this.cube.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.translate(-2.325,0.65,-0.5);
     this.scene.scale(0.4,0.2,0.05);
     this.scene.rotate(-180 * degToRad,0,1,0);
-    this.scene.translate(-2.45,3.2,-19);
     this.trapezium.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.translate(-2.325,0.65,0.5);
     this.scene.scale(0.4,0.2,0.05);
     this.scene.rotate(-180 * degToRad,0,1,0);
-    this.scene.translate(-2.45,3.2,-39);
     this.trapezium.display();
     this.scene.popMatrix();
     }
 
-  update(deltaTime, currentDirection) {
-    this.x += (this.car_acceleration * deltaTime * 1/50);
+  update(deltaTime) {
+    this.car_position_x += Math.cos(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+    this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+    
     this.wheelMovement -= (this.car_acceleration * deltaTime * 1/50);
     
-    if(currentDirection == "left"){
+    if(this.currentDirection == "left"){
       if(this.wheelRotate <= 0.4)
         this.wheelRotate += (deltaTime * 3/ 1000);
+        this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
     }
-    if(currentDirection == "right"){
+    if(this.currentDirection == "right"){
       if(this.wheelRotate >= -0.4)
       this.wheelRotate -= (deltaTime * 3/ 1000);
+      this.rotationY += (this.car_acceleration * deltaTime * 1/10);
     }
-    if(currentDirection == "none"){
-      if(this.wheelRotate > 0.02)
-        this.wheelRotate -= (deltaTime * 2/ 1000);
-      else if(this.wheelRotate < -0.02)
-        this.wheelRotate += (deltaTime * 2/ 1000);
+    if(this.currentDirection == "none"){
+      if(this.wheelRotate > 0.01){
+        this.wheelRotate -= (deltaTime * 1/ 1000);
+        this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
+      }
+      else if(this.wheelRotate < -0.01){
+        this.wheelRotate += (deltaTime * 1/ 1000);
+        this.rotationY += (this.car_acceleration * deltaTime * 1/10);
+      }
       else
         this.wheelRotate = 0;
     }

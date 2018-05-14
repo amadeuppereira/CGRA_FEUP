@@ -9,17 +9,11 @@ var TERRAIN_DIVISIONS = 8;
 
 var FPS = 60;
 
-var directions = ["none","left","right"];
-var currentDirection = directions[0];
-var rotationY = 0;
-
 class LightingScene extends CGFscene
 {
 	constructor()
 	{
 		super();
-		this.car_position_x = 3;
-		this.car_position_z = 3;
 	};
 
 	init(application)
@@ -228,10 +222,8 @@ class LightingScene extends CGFscene
 		
 		//Car
 		this.pushMatrix();
-		if(this.car.car_acceletarion != 0){
-			this.rotate(rotationY*5*degToRad,0,1,0);
-		}
-		this.translate(this.car_position_x,0.5,this.car_position_z);
+		this.translate(this.car.car_position_x,0.5,this.car.car_position_z);
+		this.rotate(this.car.rotationY * degToRad, 0, 1, 0);
 		this.car.display();
 		this.popMatrix();
 
@@ -254,13 +246,13 @@ class LightingScene extends CGFscene
 			this.car.car_acceleration += 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyA")){
-			currentDirection = directions[1];
+			this.car.currentDirection = "left";
 		}
 		else if (this.gui.isKeyPressed("KeyD")){
-			currentDirection = directions[2];
+			this.car.currentDirection = "right";
 		}
 		else{
-			currentDirection = directions[0];
+			this.car.currentDirection = "none";
 		}
 		
 	}
@@ -276,9 +268,7 @@ class LightingScene extends CGFscene
 
 		this.checkKeys();
 		
-		this.car.update(this.deltaTime, currentDirection);
-		this.car_position_x = this.car.x;
-		this.car_position_z = this.car.z;
+		this.car.update(this.deltaTime);
 	};
 
 	doSomething() {

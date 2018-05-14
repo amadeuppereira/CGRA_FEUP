@@ -20,6 +20,11 @@ class Plane extends CGFobject{
 		this.initBuffers();
 	};
 
+
+	setVertexValue(index, value) {
+		this.vertices[index] = value;
+	}
+
 	initBuffers()
 	{
 		/* example for nrDivs = 3 :

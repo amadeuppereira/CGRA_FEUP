@@ -7,7 +7,7 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var TERRAIN_DIVISIONS = 8;
 
-var FPS = 60;
+var FPS = 100;
 
 class LightingScene extends CGFscene
 {
@@ -35,20 +35,19 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		// Scene elements
-		this.car = new MyVehicle(this);
-
-		this.altimetry= [[ 2.0 , 3.0 , 2.0, 4.0, 2.5, 2.4, 2.3, 1.3, 0.3 ],
-						 [ 2.0 , 3.0 , 2.0, 4.0, 7.5, 6.4, 4.3, 1.3, 0.3 ],
-					     [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-                         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-					     [ 0.0 , 0.0 , 2.0, 4.0, 2.5, 2.4, 0.0, 0.0, 0.0 ],
-						 [ 0.0 , 0.0 , 2.0, 4.0, 3.5, 2.4, 0.0, 0.0, 0.0 ],
-						 [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-						 [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-						 [ 2.0 , 3.0 , 2.0, 1.0, 2.5, 2.4, 2.3, 1.3, 0.3 ]
+		this.altimetry= [[ 20.0 , 5.0 , 5.0, 5.0, 20.5, 20.4, 20.3, 20.3, 20.3 ],
+						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.3 ],
+					     [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+                         [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+					     [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
+						 [ 20.0 , 20.0 , 20.0, 20.0, 20.5, 20.4, 20.3, 20.3, 20.3 ]
 						];
 
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
+		this.car = new MyVehicle(this, this.terrain, 50, 50);
 		this.cylinder = new MyCylinder(this, 12, 1);
 		this.trapezium = new MyTrapezium(this);
 		this.semicircle = new MyLamp(this, 8, 20);
@@ -104,7 +103,7 @@ class LightingScene extends CGFscene
 			'Red' : 2,
 			'Water' : 3
 		}
-		this.vehicleTexture = 'LightMetal';
+		this.vehicleTexture = 'Red';
 		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 
 		this.setUpdatePeriod(1000/FPS);
@@ -241,17 +240,13 @@ class LightingScene extends CGFscene
 		this.pushMatrix();
 		this.translate(this.car.car_position_x,0.5,this.car.car_position_z);
 		this.rotate(this.car.rotationY * degToRad, 0, 1, 0);
+		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 		this.vehicleAppearances[this.currVehicleAppearance].apply();
 		this.car.display();
 		this.popMatrix();
 
 		//Terrain
-		this.pushMatrix();
-		this.translate(5, 0, 5);
-		this.scale(10, 1, 10);
-		this.rotate(-90*degToRad, 1, 0, 0);
 		this.terrain.display();
-		this.popMatrix();
 
 		// ---- END Scene drawing section
 	};
@@ -285,7 +280,6 @@ class LightingScene extends CGFscene
 		this.lastTime = currTime;
 
 		this.checkKeys();
-		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 		this.car.update(this.deltaTime);
 	};
 

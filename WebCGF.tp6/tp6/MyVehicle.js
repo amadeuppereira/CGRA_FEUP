@@ -6,15 +6,17 @@
 var degToRad = Math.PI / 180.0;
 
 class MyVehicle extends CGFobject {
-  constructor(scene) {
+  constructor(scene, terrain, x, y) {
     super(scene);
+
+    this.terrain = terrain;
 
     this.wheelMovement = 0;
     this.wheelRotate = 0;
     this.car_acceleration = 0;
 
-    this.car_position_x = 7;
-    this.car_position_z = 3;
+    this.car_position_x = x || 0;
+    this.car_position_z = y || 0;
     this.rotationY = 0;
     this.currentDirection = "none";
 
@@ -157,32 +159,48 @@ class MyVehicle extends CGFobject {
     }
 
   update(deltaTime) {
-    this.car_position_x += Math.cos(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
-    this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+    
+    let tempx = this.car_position_x + Math.cos(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+    let tempz = this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+
+    if (this.terrain.getHeightAt(tempx, tempz) != 0) {
+      this.velocity = 0;
+      return;
+    }
+
+    this.car_position_x = tempx;
+    this.car_position_z = tempz
     
     this.wheelMovement -= (this.car_acceleration * deltaTime * 1/50);
     
     if(this.currentDirection == "left"){
       if(this.wheelRotate <= 0.4)
         this.wheelRotate += (deltaTime * 3/ 1000);
-        this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
+      this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
     }
     if(this.currentDirection == "right"){
       if(this.wheelRotate >= -0.4)
-      this.wheelRotate -= (deltaTime * 3/ 1000);
+        this.wheelRotate -= (deltaTime * 3/ 1000);
       this.rotationY += (this.car_acceleration * deltaTime * 1/10);
     }
     if(this.currentDirection == "none"){
-      if(this.wheelRotate > 0.01){
+      if(this.wheelRotate > 0.1){
         this.wheelRotate -= (deltaTime * 1/ 1000);
         this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
       }
-      else if(this.wheelRotate < -0.01){
+      else if(this.wheelRotate < -0.1){
         this.wheelRotate += (deltaTime * 1/ 1000);
         this.rotationY += (this.car_acceleration * deltaTime * 1/10);
       }
       else
         this.wheelRotate = 0;
     }
+
+    // if(this.car_acceleration > 0)
+    //   this.car_acceleration -= (0.01 * deltaTime * 1/50);
+    // else if (this.car_acceleration < 0)
+    //   this.car_acceleration += (0.01 * deltaTime * 1/50);
+    //else this.car_acceleration = 0;
   };
-};
+  
+  }

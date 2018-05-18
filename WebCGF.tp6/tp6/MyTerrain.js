@@ -8,14 +8,16 @@ class MyTerrain extends Plane
    {
        super(scene, nrDivs, 0, 0, 0, 0);
 
-       this.scale = 1;
+       this.scale = 100;
 
        if(altimetry == null)
         this.altimetry = this.getDefaultAltimetry();
        else
         this.altimetry = altimetry;
 
-       //this.applyAltimetry();
+       this.applyAltimetry();
+
+       //TODO normais
        
        this.terrainAppearance = new CGFappearance(scene);
        this.terrainAppearance.loadTexture("../resources/images/terrainFloor.png");
@@ -23,8 +25,14 @@ class MyTerrain extends Plane
    };
 
    display() {
+
+        this.scene.pushMatrix();
+		this.scene.translate(this.scale/2, 0, this.scale/2);
+		this.scene.scale(this.scale, 1, this.scale);
+		this.scene.rotate(-90*degToRad, 1, 0, 0);
         this.terrainAppearance.apply();
         super.display();
+        this.scene.popMatrix();
    }
 
 
@@ -39,6 +47,7 @@ class MyTerrain extends Plane
       }
 
       return arr;
+      
    }
 
    applyAltimetry() {
@@ -53,26 +62,29 @@ class MyTerrain extends Plane
    }
 
    getHeightAt(x, y) {
-        let ix = Math.floor(x) / this.scale;
-        let iy = Math.floor(y) / this.scale;
 
-        let rx = x - ix;
-        let ry = y - iy;
+        //TODO fix
+
+        let vx = x / this.scale;
+        let vy = y / this.scale;
 
         let div = 1 / this.nrDivs;
-        let i = Math.floor(x / div);
-        let j = Math.floor(y / div);
+        let i = Math.floor(vx / div);
+        let j = Math.floor(vy / div);
+        
+        if(i < this.nrDivs && j > this.nrDivs) {
+            let a = this.altimetry[i][j];
+            let b = this.altimetry[i+1][j];
+            let c = this.altimetry[i][j+1];
+            let d = this.altimetry[i+1][j+1];
 
-        let a = this.altimetry[i][j];
-        let b = this.altimetry[i+1][j];
-        let c = this.altimetry[i][j+1];
-        let d = this.altimetry[i+1][j+1];
+            let e = (a * (1 - rx) + b * rx);
+            let f = (c * rx + d * (1 - rx));
 
-        let e = (a * (1 - rx) + b * rx);
-        let f = (c * rx + d * (1 - rx));
-
-        let z = (e * (1 - rx) + f * rz);
-        return z;
+            let z = (e * (1 - rx) + f * ry);
+            return z;
+        }
+        return this.altimetry[i][j];
    }
 
 

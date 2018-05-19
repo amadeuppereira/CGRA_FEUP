@@ -116,9 +116,9 @@ class LightingScene extends CGFscene
 
 	initLights()
 	{
-		this.setGlobalAmbientLight(0.3, 0.3, 0.3, 1.0);
+		this.setGlobalAmbientLight(1, 1, 1, 1.0);
 
-		this.lights[0].setPosition(4, 6, 1, 1);
+		this.lights[0].setPosition(25, 6, 25, 1);
 		this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[0].setAmbient(0, 0, 0, 1);
@@ -128,7 +128,7 @@ class LightingScene extends CGFscene
 			this.lights[0].enable();
 		
 
-		this.lights[1].setPosition(9, 6, 1, 1);
+		this.lights[1].setPosition(25, 6, 75, 1);
 		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[1].setAmbient(0, 0, 0, 1);
@@ -137,7 +137,7 @@ class LightingScene extends CGFscene
 		if(this.light1)
 			this.lights[1].enable();
 
-		this.lights[2].setPosition(4, 6, 6, 1);
+		this.lights[2].setPosition(75, 6, 25, 1);
 		this.lights[2].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[2].setAmbient(0, 0, 0, 1);
@@ -146,7 +146,7 @@ class LightingScene extends CGFscene
 		if(this.light2)
 			this.lights[2].enable();
 
-		this.lights[3].setPosition(9, 6, 6, 1);
+		this.lights[3].setPosition(75, 6, 75, 1);
 		this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[3].setAmbient(0, 0, 0, 1);
@@ -237,13 +237,9 @@ class LightingScene extends CGFscene
 		this.popMatrix();
 		
 		//Car
-		this.pushMatrix();
-		this.translate(this.car.car_position_x,0.5,this.car.car_position_z);
-		this.rotate(this.car.rotationY * degToRad, 0, 1, 0);
 		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 		this.vehicleAppearances[this.currVehicleAppearance].apply();
 		this.car.display();
-		this.popMatrix();
 
 		//Terrain
 		this.terrain.display();
@@ -253,10 +249,10 @@ class LightingScene extends CGFscene
 
 	checkKeys(){
 		if (this.gui.isKeyPressed("KeyW")){
-			this.car.car_acceleration -= 0.01;
+			this.car.car_velocity -= 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyS")){
-			this.car.car_acceleration += 0.01;
+			this.car.car_velocity += 0.01;
 		}
 		if (this.gui.isKeyPressed("KeyA")){
 			this.car.currentDirection = "left";

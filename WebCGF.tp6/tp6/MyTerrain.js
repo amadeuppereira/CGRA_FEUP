@@ -16,8 +16,8 @@ class MyTerrain extends Plane
         this.altimetry = altimetry;
 
        this.applyAltimetry();
-
-       //TODO normais
+       //this.applyNormals();
+       super.initGLBuffers();
        
        this.terrainAppearance = new CGFappearance(scene);
        this.terrainAppearance.loadTexture("../resources/images/terrainFloor.png");
@@ -58,33 +58,85 @@ class MyTerrain extends Plane
             count += 3; 
           }
       }
-      super.initGLBuffers();
    }
 
-   getHeightAt(x, y) {
-
-        //TODO fix
-
-        let vx = x / this.scale;
-        let vy = y / this.scale;
-
-        let div = 1 / this.nrDivs;
-        let i = Math.floor(vx / div);
-        let j = Math.floor(vy / div);
-        
-        if(i < this.nrDivs && j > this.nrDivs) {
-            let a = this.altimetry[i][j];
-            let b = this.altimetry[i+1][j];
-            let c = this.altimetry[i][j+1];
-            let d = this.altimetry[i+1][j+1];
-
-            let e = (a * (1 - rx) + b * rx);
-            let f = (c * rx + d * (1 - rx));
-
-            let z = (e * (1 - rx) + f * ry);
-            return z;
+   applyNormals() {
+    let count = 0;
+    for(let i = 0; i < this.altimetry.length; i++) {
+        for(let j = 0; j < this.altimetry[i].length; j++) {    
+          let N = this.calculateNormal(i, j);
+          this.normals[count] = N[0];
+          this.normals[++count] = N[1];
+          this.normals[++count] = N[2];
+          count++;
         }
-        return this.altimetry[i][j];
+    }
+   }
+
+   calculateNormal(x, y) {
+        let hL = this.getHeightAt(x-1, y);
+        let hR = this.getHeightAt(x+1, y);
+        let hD = this.getHeightAt(x, y-1);
+        let hU = this.getHeightAt(x, y+1);
+
+        let N = [0, 0, 0];
+        N[0] = hL - hR;
+        N[1] = hD - hU;
+        N[2] = 2.0;
+
+        let length = sqrt((N[0]*N[0]) + (N[1]*N[1]) + (N[2]*N[2]));
+        N[0] = N[0] / length;
+        N[1] = N[1] / length;
+        N[2] = N[2] / length;
+
+        return N;
+    }
+
+    getHeightAt(x, y) {
+
+        let terrainX = x/this.scale;
+        let terrainY = y/this.scale;
+        let gridSquareSize = 1 / this.nrDivs;
+        let gridX = Math.floor(terrainX / gridSquareSize);
+        let gridY = Math.floor(terrainY / gridSquareSize);
+
+        if(gridX >= this.nrDivs || gridY >= this.nrDivs || gridX < 0 || gridY < 0)
+            return 0;
+
+        let xCoord = (terrainX % gridSquareSize)/gridSquareSize;
+        let yCoord = (terrainY % gridSquareSize)/gridSquareSize;
+
+        let a = this.altimetry[gridX][gridY];
+        let b = this.altimetry[gridX+1][gridY];
+        let c = this.altimetry[gridX][gridY+1];
+        let d = this.altimetry[gridX+1][gridY+1];
+
+        let e = (a * (1 - xCoord) + b * xCoord);
+        let f = (c *xCoord + d * (1 - xCoord));
+
+        let z = (e * (1 - xCoord) + f * yCoord);
+        return z;
+
+        // let vx = x / this.scale;
+        // let vy = y / this.scale;
+
+        // let div = 1 / this.nrDivs;
+        // let i = Math.floor(vx / div);
+        // let j = Math.floor(vy / div);
+        
+        // // if(i < this.nrDivs && j > this.nrDivs) {
+        //     let a = this.altimetry[i][j];
+        //     let b = this.altimetry[i+1][j];
+        //     let c = this.altimetry[i][j+1];
+        //     let d = this.altimetry[i+1][j+1];
+
+        //     let e = (a * (1 - rx) + b * rx);
+        //     let f = (c * rx + d * (1 - rx));
+
+        //     let z = (e * (1 - rx) + f * ry);
+        //     return z;
+        // // }
+        // // return this.altimetry[i][j];
    }
 
 

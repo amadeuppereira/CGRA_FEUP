@@ -13,7 +13,7 @@ class MyVehicle extends CGFobject {
 
     this.wheelMovement = 0;
     this.wheelRotate = 0;
-    this.car_acceleration = 0;
+    this.car_velocity = 0;
 
     this.car_position_x = x || 0;
     this.car_position_z = y || 0;
@@ -36,7 +36,7 @@ class MyVehicle extends CGFobject {
 		this.car_window_texture.setSpecular(0.1,0.1,0.1,1);
   };
 
-  display(){
+  drawCarComponents() {
     //Chassi
     this.scene.pushMatrix();
     this.scene.translate(-1.5,0.2,0);
@@ -156,41 +156,53 @@ class MyVehicle extends CGFobject {
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
     this.lamp.display();
     this.scene.popMatrix();
-    }
+  }
+
+  display(){
+    this.scene.pushMatrix();
+		this.scene.translate(this.car_position_x,0.5,this.car_position_z);
+    this.scene.rotate(this.rotationY * degToRad, 0, 1, 0);  
+    this.drawCarComponents();
+    this.scene.popMatrix();
+  }
 
   update(deltaTime) {
     
-    let tempx = this.car_position_x + Math.cos(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
-    let tempz = this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_acceleration * deltaTime * 1/50);
+    let tempx = this.car_position_x + Math.cos(this.rotationY * degToRad) * (this.car_velocity * deltaTime * 1/50);
+    let tempz = this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_velocity * deltaTime * 1/50);
 
-    if (this.terrain.getHeightAt(tempx, tempz) != 0) {
-      this.velocity = 0;
+    let frontx = tempx - 5 * Math.cos(this.rotationY * degToRad);
+    let frontz = tempz - 5 * Math.sin(this.rotationY * degToRad);
+
+    if (this.terrain.getHeightAt(tempx, tempz) != 0 ||
+        this.terrain.getHeightAt(frontx, frontz) != 0) {  
+      this.car_velocity = 0;      
       return;
     }
 
     this.car_position_x = tempx;
     this.car_position_z = tempz
     
-    this.wheelMovement -= (this.car_acceleration * deltaTime * 1/50);
+    this.wheelMovement -= (this.car_velocity * deltaTime * 1/50);
     
     if(this.currentDirection == "left"){
       if(this.wheelRotate <= 0.4)
         this.wheelRotate += (deltaTime * 3/ 1000);
-      this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
+      this.rotationY -= (this.car_velocity * deltaTime * 1/10);
     }
     if(this.currentDirection == "right"){
       if(this.wheelRotate >= -0.4)
         this.wheelRotate -= (deltaTime * 3/ 1000);
-      this.rotationY += (this.car_acceleration * deltaTime * 1/10);
+      this.rotationY += (this.car_velocity * deltaTime * 1/10);
     }
     if(this.currentDirection == "none"){
       if(this.wheelRotate > 0.1){
         this.wheelRotate -= (deltaTime * 1/ 1000);
-        this.rotationY -= (this.car_acceleration * deltaTime * 1/10);
+        this.rotationY -= (this.car_velocity * deltaTime * 1/10);
       }
       else if(this.wheelRotate < -0.1){
         this.wheelRotate += (deltaTime * 1/ 1000);
-        this.rotationY += (this.car_acceleration * deltaTime * 1/10);
+        this.rotationY += (this.car_velocity * deltaTime * 1/10);
       }
       else
         this.wheelRotate = 0;

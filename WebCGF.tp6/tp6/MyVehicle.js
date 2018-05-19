@@ -172,8 +172,9 @@ class MyVehicle extends CGFobject {
     let tempz = this.car_position_z -= Math.sin(this.rotationY * degToRad) * (this.car_velocity * deltaTime * 1/50);
 
     let frontx = tempx - 5 * Math.cos(this.rotationY * degToRad);
-    let frontz = tempz - 5 * Math.sin(this.rotationY * degToRad);
+    let frontz = tempz + 5 * Math.sin(this.rotationY * degToRad);
 
+  
     if (this.terrain.getHeightAt(tempx, tempz) != 0 ||
         this.terrain.getHeightAt(frontx, frontz) != 0) {  
       this.car_velocity = 0;      

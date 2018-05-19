@@ -21,6 +21,7 @@ serialInclude([
 	'MyInterface.js',
 	'MyTrapezium.js',
 	'MyTriangle.js',
+	'MyCrane.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

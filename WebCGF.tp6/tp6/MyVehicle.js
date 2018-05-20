@@ -33,7 +33,13 @@ class MyVehicle extends CGFobject {
     this.car_window_texture.loadTexture("../resources/images/car_window_texture.png");
 		this.car_window_texture.setAmbient(0.6,0.6,0.9,1);
     this.car_window_texture.setDiffuse(0.6,0.6,0.9,1);
-		this.car_window_texture.setSpecular(0.1,0.1,0.1,1);
+    this.car_window_texture.setSpecular(0.1,0.1,0.1,1);
+    
+    this.lamps_texture = new CGFappearance(scene);
+    this.lamps_texture.loadTexture("../resources/images/lights.png");
+		this.lamps_texture.setAmbient(0.6,0.6,0.9,1);
+    this.lamps_texture.setDiffuse(0.6,0.6,0.9,1);
+		this.lamps_texture.setSpecular(0.1,0.1,0.1,1);
   };
 
   drawCarComponents() {
@@ -145,6 +151,7 @@ class MyVehicle extends CGFobject {
     this.scene.scale(0.25,0.1,0.25);
 		this.scene.rotate(-90 * degToRad, 0, 1, 0);
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
+    this.lamps_texture.apply();
     this.lamp.display();
     this.scene.popMatrix();
 
@@ -154,6 +161,7 @@ class MyVehicle extends CGFobject {
     this.scene.scale(0.25,0.1,0.25);
 		this.scene.rotate(-90 * degToRad, 0, 1, 0);
     this.scene.rotate(-65 * degToRad, 1, 0, 0);
+    this.lamps_texture.apply();
     this.lamp.display();
     this.scene.popMatrix();
   }

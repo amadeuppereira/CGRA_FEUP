@@ -224,4 +224,4 @@ class MyVehicle extends CGFobject {
     //else this.car_acceleration = 0;
   };
   
-  }
+}

@@ -15,7 +15,7 @@ class MyTerrain extends Plane
        else
         this.altimetry = altimetry;
 
-       this.applyAltimetry();
+       //this.applyAltimetry();
        //this.applyNormals();
        super.initGLBuffers();
        

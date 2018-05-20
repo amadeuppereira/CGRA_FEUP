@@ -51,6 +51,7 @@ class LightingScene extends CGFscene
 		this.cylinder = new MyCylinder(this, 12, 1);
 		this.trapezium = new MyTrapezium(this);
 		this.semicircle = new MyLamp(this, 8, 20);
+		this.crane = new MyCrane(this);
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);
@@ -244,6 +245,10 @@ class LightingScene extends CGFscene
 		//Terrain
 		this.terrain.display();
 
+		//Crane
+		this.materialDefault.apply();
+		this.crane.display();
+
 		// ---- END Scene drawing section
 	};
 
@@ -277,6 +282,7 @@ class LightingScene extends CGFscene
 
 		this.checkKeys();
 		this.car.update(this.deltaTime);
+		this.crane.update(this.deltaTime);
 	};
 
 	doSomething() {

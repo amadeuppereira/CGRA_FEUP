@@ -23,7 +23,7 @@ class MyVehicle extends CGFobject {
     this.attached = false;
 
 
-    this.trapezium = new MyTrapezium(this.scene);
+    this.trapezium = new MyTrapezium(this.scene, 1, 0.1);
     this.wheel = new MyWheel(this.scene, 8, 20);
     this.lamp = new MyLamp(this.scene, 8, 20);
     this.cylinder = new MyCylinder(this.scene, 8, 20);
@@ -218,7 +218,8 @@ class MyVehicle extends CGFobject {
 
     if(frontx > 20 && frontz > 35 && tempx < 27 && tempz < 37 && Math.abs(this.car_velocity) <= 0.1){
       this.attached = true;
-      this.car_velocity = 0;
+      if(!this.attached)
+        this.car_velocity = 0;
     }
 
     if (!this.attached) {

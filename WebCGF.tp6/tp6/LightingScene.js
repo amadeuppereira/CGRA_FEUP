@@ -50,7 +50,7 @@ class LightingScene extends CGFscene
 		this.car = new MyVehicle(this, 25, 25, this.terrain);
 		//this.car.attached = true;
 		this.cylinder = new MyCylinder(this, 12, 1);
-		this.trapezium = new MyTrapezium(this);
+		this.trapezium = new MyTrapezium(this, 1, 1);
 		this.semicircle = new MyLamp(this, 8, 20);
 		this.crane = new MyCrane(this, this.car);
 		this.position = new MyQuad(this);

@@ -3,73 +3,153 @@
  * @constructor
  */
 class MyTrapezium extends CGFobject {
-  constructor(scene) {
-    super(scene);
-
-		this.quad = new MyQuad(this.scene);
-		this.triangle = new MyTriangle(this.scene);
+  constructor(scene, left, right) {
+	super(scene);
+	this.left = left || 0;
+	this.right = right || 0;
+	this.initBuffers();
   };
 
-  display()
-	{
-		// front face
-		this.scene.pushMatrix();
-		this.scene.translate(0, 0, 0.5);
-		this.quad.display();
-		this.scene.popMatrix();
+  initBuffers() {
 
-		// back face
-		this.scene.pushMatrix();
-		this.scene.rotate(180 * degToRad, 1, 0, 0);
-		this.scene.translate(0, 0, 0.5);
-		this.quad.display();
-		this.scene.popMatrix();
+	this.vertices = [
+		//frente
+		-0.5 - this.left, -0.5, 0.5, //0
+		0.5 + this.right, -0.5, 0.5, //1
+		-0.5, 0.5, 0.5,              //2
+		0.5, 0.5, 0.5,               //3
 
-		// top face
-		this.scene.pushMatrix();
-		this.scene.rotate(-90 * degToRad, 1, 0, 0);
-		this.scene.translate(0, 0, 0.5);
-		this.quad.display();
-		this.scene.popMatrix();
+		//tras
+		-0.5 - this.left, -0.5, -0.5, //4
+		0.5 + this.right, -0.5, -0.5, //5
+		-0.5, 0.5, -0.5,     	      //6
+		0.5, 0.5, -0.5,          	  //7
 
-		// back face
-		this.scene.pushMatrix();
-		this.scene.rotate(90 * degToRad, 1, 0, 0);
-		this.scene.translate(-0.5, 0, 0.5);
-		this.scene.scale(2,1,1);
-		this.quad.display();
-		this.scene.popMatrix();
+		//diagonal da esquerda
+		-0.5 - this.left, -0.5, 0.5, //8
+		-0.5, 0.5, 0.5,              //9
+		-0.5 - this.left, -0.5, -0.5, //10
+		-0.5, 0.5, -0.5,     	      //11
 
-		// right face (ver melhor isto)
-		this.scene.pushMatrix();
-		this.scene.scale(Math.sqrt(2),1,1);
-		this.scene.rotate(-90 * degToRad, 0, 1, 0);
-    this.scene.rotate(-35 * degToRad, 1, 0, 0);
-		this.scene.translate(0, -0.4, 0.57);
-		this.scene.scale(1,1.2,1);
-		this.quad.display();
-		this.scene.popMatrix();
+		//cima
+		-0.5, 0.5, 0.5,              //12
+		0.5, 0.5, 0.5,               //13
+		-0.5, 0.5, -0.5,     	      //14
+		0.5, 0.5, -0.5,          	  //15
 
-		// left face
-		this.scene.pushMatrix();
-		this.scene.rotate(90 * degToRad, 0, 1, 0);
-		this.scene.translate(0, 0, 0.5);
-		this.quad.display();
-		this.scene.popMatrix();
+		//diagonal da direita
+		0.5 + this.right, -0.5, 0.5, //16
+		0.5, 0.5, 0.5,               //17
+		0.5 + this.right, -0.5, -0.5, //18
+		0.5, 0.5, -0.5,          	  //19
 
-		//right triangle
-		this.scene.pushMatrix();
-		this.scene.translate(-0.5,-0.5,0.5);
-		this.triangle.display();
-		this.scene.popMatrix();
+		//baixo
+		-0.5 - this.left, -0.5, 0.5, //20
+		0.5 + this.right, -0.5, 0.5, //21
+		-0.5 - this.left, -0.5, -0.5, //22
+		0.5 + this.right, -0.5, -0.5, //23
 
-		//left triangle
-		this.scene.pushMatrix();
-		this.scene.rotate(180 * degToRad, 1, 0, 0);
-		this.scene.rotate(90 * degToRad, 0, 0, 1);
-		this.scene.translate(0.5,0.5,0.5);
-		this.triangle.display();
-		this.scene.popMatrix();
+	];
 
-	};
+	this.indices = [
+		0, 1, 2,
+		3, 2, 1,
+
+		4, 6, 5,
+		5, 6, 7,
+
+		8, 9, 10,
+		9, 11, 10,
+
+		12, 13, 15,
+		12, 15, 14,
+
+		16, 18, 19,
+		16, 19, 17,
+
+		20, 22, 23,
+		20, 23, 21
+		
+	];
+
+	this.primitiveType = this.scene.gl.TRIANGLES;
+
+	let a = Math.atan(1/this.left);
+	let x1 = Math.cos(Math.PI/2 + a);
+	let y1 = Math.sin(Math.PI/2 + a);
+
+	let b = Math.atan(1/this.right);
+	let x2 = Math.cos(Math.PI/2 - b);
+	let y2 = Math.sin(Math.PI/2 - b);
+		
+	this.normals = [
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+
+		0, 0, -1,
+		0, 0, -1,
+		0, 0, -1,
+		0, 0, -1,
+
+		x1, y1, 0,
+		x1, y1, 0,
+		x1, y1, 0,
+		x1, y1, 0,
+	
+		0, 1, 0, 
+		0, 1, 0,
+		0, 1, 0,
+		0, 1, 0,
+
+		x2, y2, 0,
+		x2, y2, 0,
+		x2, y2, 0,
+		x2, y2, 0,
+
+		0, -1, 0, 
+		0, -1, 0,
+		0, -1, 0,
+		0, -1, 0
+	
+	];
+
+
+
+	this.texCoords = [
+		0, 1,
+		1, 1,
+		this.left / (this.left + this.right + 1), 0,
+		(this.left + 1) / (this.left + this.right + 1), 0,
+
+		1, 1,
+		0, 1,
+		(this.right + 1) / (this.left + this.right + 1), 0,
+		this.right / (this.left + this.right + 1), 0,
+
+		1, 1,
+		1, 0,
+		0, 1,
+		0, 0,
+
+		0, 1,
+		1, 1,
+		0, 0,
+		1, 0,
+
+		0, 1,
+		0, 0,
+		1, 1,
+		1, 0,
+
+		0, 0,
+		1, 0,
+		0, 1,
+		1, 1
+
+	];
+
+	this.initGLBuffers();
+  };
 };

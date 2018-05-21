@@ -7,7 +7,7 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var TERRAIN_DIVISIONS = 8;
 
-var FPS = 10;
+var FPS = 100;
 
 class LightingScene extends CGFscene
 {

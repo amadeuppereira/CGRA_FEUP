@@ -8,15 +8,15 @@ class MyTerrain extends Plane
    {
        super(scene, nrDivs, 0, 0, 0, 0);
 
-       this.scale = 100;
+       this.scale = 50;
 
        if(altimetry == null)
         this.altimetry = this.getDefaultAltimetry();
        else
         this.altimetry = altimetry;
 
-       //this.applyAltimetry();
-       //this.applyNormals();
+       this.applyAltimetry();
+       this.applyNormals();
        super.initGLBuffers();
        
        this.terrainAppearance = new CGFappearance(scene);
@@ -84,7 +84,7 @@ class MyTerrain extends Plane
         N[1] = hD - hU;
         N[2] = 2.0;
 
-        let length = sqrt((N[0]*N[0]) + (N[1]*N[1]) + (N[2]*N[2]));
+        let length = Math.sqrt((N[0]*N[0]) + (N[1]*N[1]) + (N[2]*N[2]));
         N[0] = N[0] / length;
         N[1] = N[1] / length;
         N[2] = N[2] / length;
@@ -117,26 +117,6 @@ class MyTerrain extends Plane
         let z = (e * (1 - xCoord) + f * yCoord);
         return z;
 
-        // let vx = x / this.scale;
-        // let vy = y / this.scale;
-
-        // let div = 1 / this.nrDivs;
-        // let i = Math.floor(vx / div);
-        // let j = Math.floor(vy / div);
-        
-        // // if(i < this.nrDivs && j > this.nrDivs) {
-        //     let a = this.altimetry[i][j];
-        //     let b = this.altimetry[i+1][j];
-        //     let c = this.altimetry[i][j+1];
-        //     let d = this.altimetry[i+1][j+1];
-
-        //     let e = (a * (1 - rx) + b * rx);
-        //     let f = (c * rx + d * (1 - rx));
-
-        //     let z = (e * (1 - rx) + f * ry);
-        //     return z;
-        // // }
-        // // return this.altimetry[i][j];
    }
 
 

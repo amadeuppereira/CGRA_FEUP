@@ -7,7 +7,7 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var TERRAIN_DIVISIONS = 8;
 
-var FPS = 100;
+var FPS = 10;
 
 class LightingScene extends CGFscene
 {
@@ -35,7 +35,7 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		// Scene elements
-		this.altimetry= [[ 20.0 , 5.0 , 5.0, 5.0, 20.5, 20.4, 20.3, 20.3, 20.3 ],
+		this.altimetry= [[ 20.0 , 20.0 , 20.0, 20.0, 20.5, 20.4, 20.3, 20.3, 20.3 ],
 						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.3 ],
 					     [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
                          [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
@@ -47,38 +47,16 @@ class LightingScene extends CGFscene
 						];
 
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
-		this.car = new MyVehicle(this, this.terrain, 50, 50);
+		this.car = new MyVehicle(this, 25, 25, this.terrain);
+		//this.car.attached = true;
 		this.cylinder = new MyCylinder(this, 12, 1);
 		this.trapezium = new MyTrapezium(this);
 		this.semicircle = new MyLamp(this, 8, 20);
-		this.crane = new MyCrane(this);
+		this.crane = new MyCrane(this, this.car);
+		this.position = new MyQuad(this);
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);
-		
-		this.texture1 = new CGFappearance(this);
-		this.texture1.loadTexture("../resources/images/texture1.png");
-		this.texture1.setAmbient(0.6,0.6,0.9,1);
-    	this.texture1.setDiffuse(0.6,0.6,0.9,1);
-		this.texture1.setSpecular(0.1,0.1,0.1,1);
-
-		this.texture2 = new CGFappearance(this);
-		this.texture2.loadTexture("../resources/images/texture2.png");
-		this.texture2.setAmbient(0.6,0.6,0.9,1);
-    	this.texture2.setDiffuse(0.6,0.6,0.9,1);
-		this.texture2.setSpecular(0.1,0.1,0.1,1);
-
-		this.texture3 = new CGFappearance(this);
-		this.texture3.loadTexture("../resources/images/texture3.png");
-		this.texture3.setAmbient(0.6,0.6,0.9,1);
-    	this.texture3.setDiffuse(0.6,0.6,0.9,1);
-		this.texture3.setSpecular(0.1,0.1,0.1,1);
-
-		this.texture4 = new CGFappearance(this);
-		this.texture4.loadTexture("../resources/images/texture4.png");
-		this.texture4.setAmbient(0.6,0.6,0.9,1);
-    	this.texture4.setDiffuse(0.6,0.6,0.9,1);
-		this.texture4.setSpecular(0.1,0.1,0.1,1);
 
 		this.objectsTexture = new CGFappearance(this);
 		this.objectsTexture.loadTexture("../resources/images/bandeiraPortugal.png");
@@ -105,7 +83,7 @@ class LightingScene extends CGFscene
 			'Water' : 3
 		}
 		this.vehicleTexture = 'Red';
-		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
+		this.car.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 
 		this.setUpdatePeriod(1000/FPS);
 	};
@@ -238,17 +216,36 @@ class LightingScene extends CGFscene
 		this.popMatrix();
 		
 		//Car
-		this.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
-		this.vehicleAppearances[this.currVehicleAppearance].apply();
-		this.car.display();
+		this.car.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
+		if(!this.car.attached)
+			this.car.display();
 
 		//Terrain
 		this.terrain.display();
 
 		//Crane
 		this.materialDefault.apply();
+		this.pushMatrix();
+		this.translate(25, 0, 25);
 		this.crane.display();
+		this.popMatrix();
+		
+		//Position R
+		this.materialDefault.apply();
+		this.pushMatrix();
+		this.translate(24,0.1,36);
+		this.scale(7, 1, 4);
+		this.rotate(-90*degToRad, 1, 0, 0);
+		this.position.display();
+		this.popMatrix();
 
+		//Position D
+		this.pushMatrix();
+		this.translate(24,0.1,14);
+		this.scale(7, 1, 4);
+		this.rotate(-90*degToRad, 1, 0, 0);
+		this.position.display();
+		this.popMatrix();
 		// ---- END Scene drawing section
 	};
 
@@ -278,7 +275,15 @@ class LightingScene extends CGFscene
 		else{
 			this.crane.direction = "none";
 		}
-		
+		if(this.gui.isKeyPressed("KeyB")){
+			this.crane.direction2 = "right";
+		}
+		else if(this.gui.isKeyPressed("KeyN")){
+			this.crane.direction2 = "left";
+		}
+		else{
+			this.crane.direction2 = "none";
+		}
 	}
 
 	update(currTime) {

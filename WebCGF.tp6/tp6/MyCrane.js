@@ -7,7 +7,7 @@ var degToRad = Math.PI / 180.0;
 
 class MyCrane extends CGFobject
 {
-    constructor(scene)
+    constructor(scene, car)
 	{
 		super(scene);
 
@@ -18,6 +18,7 @@ class MyCrane extends CGFobject
 
 		this.cylinder = new MyCylinder(this.scene,8,20);
 		this.side = new MyCircle(scene, 12);
+		this.car = car;
 
 	};
 
@@ -71,6 +72,14 @@ class MyCrane extends CGFobject
 		this.scene.rotate(-90 * degToRad,1,0,0);
 		this.completeCylinder();
 		this.scene.popMatrix();
+
+		//Car
+		if(this.car.attached){
+			this.scene.pushMatrix();
+			this.scene.translate(2,3.8-Math.sin(this.xRotation)*6,5+Math.cos(this.xRotation)*7);
+			this.car.display();
+			this.scene.popMatrix();
+		}
 	}
 
 	completeCylinder(){
@@ -97,11 +106,12 @@ class MyCrane extends CGFobject
 	}
 
 	update(deltaTime){
-		//para rodar o eixo dos y
-		//this.yRotation += 0.05;
-		//this.xRotation += 0.01;
+		//USAR O DELTATIME!!!!!!!!!!!!!!!!!!!!!!!
+		
+		if(this.car.attached){
+
 		if(this.direction == "up")
-			if(this.xRotation <= 0.6)
+			if(this.xRotation <= 0.57)
 				this.xRotation += 0.01;
 		if(this.direction == "down")
 			if(this.xRotation >= -0.2)
@@ -111,6 +121,8 @@ class MyCrane extends CGFobject
 			this.yRotation += 0.01;
 		if(this.direction2 == "left")
 			this.yRotation -= 0.01;
+		
+		}
 
 	};
 }

@@ -13,6 +13,7 @@ class MyCrane extends CGFobject
 
 		this.yRotation = 0;
 		this.xRotation = 0;
+		this.direction = "none";
 
 		this.cylinder = new MyCylinder(this.scene,8,20);
 		this.side = new MyCircle(scene, 12);
@@ -67,6 +68,19 @@ class MyCrane extends CGFobject
 		this.scene.popMatrix();
 		this.scene.popMatrix();
 		this.scene.popMatrix();
+
+		//Cable
+		this.scene.pushMatrix();
+		this.scene.rotate(this.yRotation,0,1,0);
+		this.scene.pushMatrix();
+		this.scene.translate(0,5-Math.sin(this.xRotation)*6,5+Math.cos(this.xRotation)*7);
+		this.scene.scale(0.1,5,0.1);
+		this.scene.rotate(-90 * degToRad,1,0,0);
+		this.completeCylinder();
+		this.scene.popMatrix();
+		this.scene.popMatrix();
+
+		//Magnet
 	}
 
 	completeCylinder(){
@@ -93,7 +107,14 @@ class MyCrane extends CGFobject
 
 	update(deltaTime){
 		//para rodar o eixo dos y
-		this.yRotation += 0.05;
-		this.xRotation += 0.05;
+		//this.yRotation += 0.05;
+		//this.xRotation += 0.01;
+		if(this.direction == "up")
+			if(this.xRotation <= 0.6)
+				this.xRotation += 0.01;
+		if(this.direction == "down")
+			if(this.xRotation >= -0.2)
+			this.xRotation -= 0.01;
+
 	};
 }

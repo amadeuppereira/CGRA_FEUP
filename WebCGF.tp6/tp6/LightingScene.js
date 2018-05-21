@@ -268,6 +268,16 @@ class LightingScene extends CGFscene
 		else{
 			this.car.currentDirection = "none";
 		}
+
+		if(this.gui.isKeyPressed("KeyC")){
+			this.crane.direction = "up";
+		}
+		else if(this.gui.isKeyPressed("KeyV")){
+			this.crane.direction = "down";
+		}
+		else{
+			this.crane.direction = "none";
+		}
 		
 	}
 

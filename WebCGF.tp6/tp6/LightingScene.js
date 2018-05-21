@@ -225,10 +225,10 @@ class LightingScene extends CGFscene
 
 		//Crane
 		this.materialDefault.apply();
-		this.pushMatrix();
-		this.translate(25, 0, 25);
+		// this.pushMatrix();
+		// this.translate(25, 0, 25);
 		this.crane.display();
-		this.popMatrix();
+		//this.popMatrix();
 		
 		//Position R
 		this.materialDefault.apply();

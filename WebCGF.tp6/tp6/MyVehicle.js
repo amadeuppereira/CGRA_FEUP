@@ -6,7 +6,7 @@
 var degToRad = Math.PI / 180.0;
 
 class MyVehicle extends CGFobject {
-  constructor(scene, x, y, terrain) {
+  constructor(scene, x, z, terrain) {
     super(scene);
 
     this.terrain = terrain || null;
@@ -16,10 +16,13 @@ class MyVehicle extends CGFobject {
     this.car_velocity = 0;
 
     this.car_position_x = x || 0;
-    this.car_position_z = y || 0;
+    this.car_position_y = 0.5;
+    this.car_position_z = z || 0;
+
     this.rotationY = 0;
     this.currentDirection = "none";
 
+    this.onPosition = false; //true if the car is in place to get picked by the crane
     this.attached = false;
 
 
@@ -201,7 +204,7 @@ class MyVehicle extends CGFobject {
     this.vehicleAppearances[this.currVehicleAppearance].apply();
     this.scene.pushMatrix();
     if (!this.attached) {
-      this.scene.translate(this.car_position_x, 0.5, this.car_position_z);
+      this.scene.translate(this.car_position_x, this.car_position_y, this.car_position_z);
       this.scene.rotate(this.rotationY * degToRad, 0, 1, 0);
     }
     this.drawCarComponents();
@@ -217,7 +220,7 @@ class MyVehicle extends CGFobject {
     let frontz = tempz + 5.9 * Math.sin(this.rotationY * degToRad);
 
     if(frontx > 20 && frontz > 35 && tempx < 27 && tempz < 37 && Math.abs(this.car_velocity) <= 0.1){
-      this.attached = true;
+      this.onPosition = true;
       if(!this.attached)
         this.car_velocity = 0;
     }
@@ -261,5 +264,4 @@ class MyVehicle extends CGFobject {
           this.wheelRotate = 0;
       }
   };
-
 }

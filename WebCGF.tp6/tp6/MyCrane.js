@@ -5,6 +5,8 @@
 
 var degToRad = Math.PI / 180.0;
 
+var drop_car = false;
+
 class MyCrane extends CGFobject
 {
     constructor(scene, car)
@@ -100,28 +102,69 @@ class MyCrane extends CGFobject
 	
 	display(){
 		this.scene.pushMatrix();
+		this.scene.translate(25, 0, 25);
 		this.scene.rotate(this.yRotation,0,1,0);
 		this.drawCraneComponents();
 		this.scene.popMatrix();
 	}
 
 	update(deltaTime){
-		//USAR O DELTATIME!!!!!!!!!!!!!!!!!!!!!!!
-		
+
+		//lowering the magnet and catching the car
+		if(this.car.onPosition && !this.car.attached){
+			if(this.xRotation < 0.57 && this.yRotation == 0){
+				this.xRotation += (deltaTime * 1/5000);
+				if(this.xRotation > 0.57)
+					this.xRotation = 0.57;
+			}
+			else{
+				this.car.attached = true;
+			}
+		}
+
+		//moving up the magnet with the car and rotating the crane to D position
 		if(this.car.attached){
+			if(this.xRotation > 0 && this.yRotation == 0){
+				this.xRotation -= (deltaTime * 1/4000);
+				if(this.xRotation < 0)
+					this.xRotation = 0;
+			}
+			else if(this.xRotation <= 0 && this.yRotation > -3.1){
+				this.yRotation -= (deltaTime * 1/2000);
+				if(this.yRotation < -3.1)
+					this.yRotation = -3.1;
+			}
+			else{
+				drop_car = true;
+				this.car.onPosition = false;
+				this.car.attached = false;
+				this.car.car_position_x = 22;
+				this.car.car_position_y = 3.8;
+				this.car.car_position_z = 13;
+				this.car.car_velocity = 0;
+				this.car.rotationY = 180;
+			}		
+		}
 
-		if(this.direction == "up")
-			if(this.xRotation <= 0.57)
-				this.xRotation += 0.01;
-		if(this.direction == "down")
-			if(this.xRotation >= -0.2)
-				this.xRotation -= 0.01;
-
-		if(this.direction2 == "right")
-			this.yRotation += 0.01;
-		if(this.direction2 == "left")
-			this.yRotation -= 0.01;
-		
+		//dropping the car and moving the crane to the original position
+		if(drop_car){
+			if(this.car.car_position_y > 0.5){
+				this.car.car_position_y -= (deltaTime * 1/80);
+				if(this.car.car_position_y < 0.5)
+					this.car.car_position_y = 0.5;
+				// if((this.car.car_position_y -= (deltaTime * 1/80)) < 0.5)
+				// 	this.car.car_position_y = 0.5;
+			}
+			else{
+				//making the crane go back to the original position
+				if(this.yRotation < 0){
+					this.yRotation += (deltaTime * 1/2000);
+					if(this.yRotation > 0){
+						this.yRotation = 0;
+						drop_car = false;
+					}
+				}
+			}
 		}
 
 	};

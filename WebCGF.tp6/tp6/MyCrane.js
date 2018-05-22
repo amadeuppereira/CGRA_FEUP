@@ -177,6 +177,5 @@ class MyCrane extends CGFobject
 				}
 			}
 		}
-
 	};
 }

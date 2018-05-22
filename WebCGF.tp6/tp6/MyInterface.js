@@ -42,6 +42,8 @@ class MyInterface extends CGFinterface {
 		// group.add(this.scene, 'option2');
 		// group.add(this.scene, 'option3');
 
+		this.gui.add(this.scene, 'FPS');
+
 		var lights=this.gui.addFolder("Luzes");
 		lights.open();
 

@@ -15,8 +15,6 @@ class MyCrane extends CGFobject
 
 		this.yRotation = 0;
 		this.xRotation = 0;
-		this.direction = "none";
-		this.direction2 = "none";
 
 		this.cylinder = new MyCylinder(this.scene,8,20);
 		this.side = new MyCircle(scene, 12);

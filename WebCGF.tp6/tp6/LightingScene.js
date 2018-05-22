@@ -7,7 +7,7 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var TERRAIN_DIVISIONS = 8;
 
-var FPS = 100;
+//var FPS = 100;
 
 class LightingScene extends CGFscene
 {
@@ -48,7 +48,6 @@ class LightingScene extends CGFscene
 
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
 		this.car = new MyVehicle(this, 20, 25, this.terrain);
-		//this.car.attached = true;
 		this.cylinder = new MyCylinder(this, 12, 1);
 		this.trapezium = new MyTrapezium(this, 1, 1);
 		this.semicircle = new MyLamp(this, 8, 20);
@@ -98,7 +97,8 @@ class LightingScene extends CGFscene
 		this.vehicleTexture = 'Red';
 		this.car.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 
-		this.setUpdatePeriod(1000/FPS);
+		this.FPS = 100;
+		this.setUpdatePeriod(1000/this.FPS);
 	};
 
 	initCameras()
@@ -242,7 +242,7 @@ class LightingScene extends CGFscene
 		//Position R
 		this.pushMatrix();
 		this.positionRTexture.apply();
-		this.translate(24,0.01,36);
+		this.translate(24,0.01,35.8);
 		this.scale(7, 1, 4);
 		this.rotate(180 * degToRad, 0,1,0);
 		this.rotate(-90*degToRad, 1, 0, 0);
@@ -267,37 +267,22 @@ class LightingScene extends CGFscene
 		if (this.gui.isKeyPressed("KeyS")){
 			this.car.car_velocity += 0.01;
 		}
-		if (this.gui.isKeyPressed("KeyA")){
+
+		if (this.gui.isKeyPressed("KeyA") && !this.gui.isKeyPressed("KeyD")){
 			this.car.currentDirection = "left";
 		}
-		else if (this.gui.isKeyPressed("KeyD")){
+		else if (this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
 			this.car.currentDirection = "right";
 		}
 		else{
 			this.car.currentDirection = "none";
 		}
-
-		if(this.gui.isKeyPressed("KeyC")){
-			this.crane.direction = "up";
-		}
-		else if(this.gui.isKeyPressed("KeyV")){
-			this.crane.direction = "down";
-		}
-		else{
-			this.crane.direction = "none";
-		}
-		if(this.gui.isKeyPressed("KeyB")){
-			this.crane.direction2 = "right";
-		}
-		else if(this.gui.isKeyPressed("KeyN")){
-			this.crane.direction2 = "left";
-		}
-		else{
-			this.crane.direction2 = "none";
-		}
 	}
 
 	update(currTime) {
+		//Updating FPS
+		this.setUpdatePeriod(1000/this.FPS);
+
 		var today = new Date();
 
 		currTime -= today.getTimezoneOffset()*60*1000;
@@ -310,8 +295,4 @@ class LightingScene extends CGFscene
 		this.car.update(this.deltaTime);
 		this.crane.update(this.deltaTime);
 	};
-
-	doSomething() {
-		console.log("Doing something...");
-	}
 };

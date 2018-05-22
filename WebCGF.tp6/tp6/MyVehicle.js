@@ -49,25 +49,25 @@ class MyVehicle extends CGFobject {
     this.lamps_texture.setSpecular(0.1, 0.1, 0.1, 1);
 
     this.texture1 = new CGFappearance(scene);
-		this.texture1.loadTexture("../resources/images/texture1.png");
+		this.texture1.loadTexture("../resources/images/paisagem.png");
 		this.texture1.setAmbient(0.6,0.6,0.9,1);
     this.texture1.setDiffuse(0.6,0.6,0.9,1);
 		this.texture1.setSpecular(0.1,0.1,0.1,1);
 
 		this.texture2 = new CGFappearance(scene);
-		this.texture2.loadTexture("../resources/images/texture2.png");
+		this.texture2.loadTexture("../resources/images/water.png");
 		this.texture2.setAmbient(0.6,0.6,0.9,1);
     this.texture2.setDiffuse(0.6,0.6,0.9,1);
 		this.texture2.setSpecular(0.1,0.1,0.1,1);
 
 		this.texture3 = new CGFappearance(scene);
-		this.texture3.loadTexture("../resources/images/texture3.png");
+		this.texture3.loadTexture("../resources/images/red.png");
 		this.texture3.setAmbient(0.6,0.6,0.9,1);
     this.texture3.setDiffuse(0.6,0.6,0.9,1);
 		this.texture3.setSpecular(0.1,0.1,0.1,1);
 
 		this.texture4 = new CGFappearance(scene);
-		this.texture4.loadTexture("../resources/images/texture4.png");
+		this.texture4.loadTexture("../resources/images/cr7.png");
 		this.texture4.setAmbient(0.6,0.6,0.9,1);
     this.texture4.setDiffuse(0.6,0.6,0.9,1);
     this.texture4.setSpecular(0.1,0.1,0.1,1);

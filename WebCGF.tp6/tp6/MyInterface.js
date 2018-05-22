@@ -61,7 +61,7 @@ class MyInterface extends CGFinterface {
 
 		this.gui.add(this.scene, 'eixos');
 
-		this.gui.add(this.scene, 'vehicleTexture', ['LightMetal', 'DarkMetal', 'Red', 'Water']);
+		this.gui.add(this.scene, 'vehicleTexture', ['Landscape', 'Water', 'Red', 'CR7']);
 
 		var objects=this.gui.addFolder("Objetos");
 		objects.open();

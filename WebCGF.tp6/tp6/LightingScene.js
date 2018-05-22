@@ -7,8 +7,6 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var TERRAIN_DIVISIONS = 8;
 
-//var FPS = 100;
-
 class LightingScene extends CGFscene
 {
 	constructor()
@@ -34,6 +32,7 @@ class LightingScene extends CGFscene
 
 		this.axis = new CGFaxis(this);
 
+
 		// Scene elements
 		this.altimetry= [[ 10.0 , 10.0 , 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 ],
 						 [ 10.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0 ],
@@ -54,15 +53,15 @@ class LightingScene extends CGFscene
 		this.crane = new MyCrane(this, this.car);
 		this.position = new MyQuad(this);
 
+
 		// Materials
 		this.materialDefault = new CGFappearance(this);
 
 		this.objectsTexture = new CGFappearance(this);
-		this.objectsTexture.loadTexture("../resources/images/bandeiraPortugal.png");
+		this.objectsTexture.loadTexture("../resources/images/cr7.png");
 		this.objectsTexture.setAmbient(0.6,0.6,0.9,1);
     	this.objectsTexture.setDiffuse(0.6,0.6,0.9,1);
 		this.objectsTexture.setSpecular(0.1,0.1,0.1,1);
-
 
 		this.positionRTexture = new CGFappearance(this);
 		this.positionRTexture.loadTexture("../resources/images/positionR.png");
@@ -76,6 +75,17 @@ class LightingScene extends CGFscene
     	this.positionDTexture.setDiffuse(0.6,0.6,0.9,1);
 		this.positionDTexture.setSpecular(0.1,0.1,0.1,1);
 
+		this.vehicleAppearances = [this.texture1, this.texture2, this.texture3, this.texture4];
+		this.vehicleAppearanceList = {
+			'Landscape' : 0,
+			'Water' : 1,
+			'Red' : 2,
+			'CR7' : 3
+		}
+		this.vehicleTexture = 'Red';
+		this.car.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
+
+
 		//Interface elements
 		this.light0 = true;
 		this.light1 = true;
@@ -86,16 +96,6 @@ class LightingScene extends CGFscene
 		this.Cylinder = false;
 		this.Trapezium = false;
 		this.Semicircle = false;
-
-		this.vehicleAppearances = [this.texture1, this.texture2, this.texture3, this.texture4];
-		this.vehicleAppearanceList = {
-			'LightMetal' : 0,
-			'DarkMetal' : 1,
-			'Red' : 2,
-			'Water' : 3
-		}
-		this.vehicleTexture = 'Red';
-		this.car.currVehicleAppearance = this.vehicleAppearanceList[this.vehicleTexture];
 
 		this.FPS = 100;
 		this.setUpdatePeriod(1000/this.FPS);
@@ -146,7 +146,6 @@ class LightingScene extends CGFscene
 		this.lights[3].setSpecular(1.0, 1.0, 1.0, 1)
 		if(this.light3)
 			this.lights[3].enable();
-
 	};
 
 	updateLights()
@@ -202,6 +201,7 @@ class LightingScene extends CGFscene
 
 		// ---- END Background, camera and axis setup
 
+		
 		// ---- BEGIN Scene drawing section
 
 		//Objects

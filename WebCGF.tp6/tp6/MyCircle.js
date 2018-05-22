@@ -21,7 +21,6 @@ class MyCircle extends CGFobject
     this.texCoords = [];
 
     this.getVertices();
-		//console.log(this.indices);
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 

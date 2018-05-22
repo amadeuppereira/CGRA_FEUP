@@ -5,16 +5,15 @@
 
 var degToRad = Math.PI / 180.0;
 
-var drop_car = false;
-
 class MyCrane extends CGFobject
-{
+{	
     constructor(scene, car)
 	{
 		super(scene);
 
 		this.yRotation = 0;
 		this.xRotation = 0;
+		this.state = "default";
 
 		// Elements
 		this.cylinder = new MyCylinder(this.scene,8,20);
@@ -124,10 +123,43 @@ class MyCrane extends CGFobject
 		this.scene.popMatrix();
 	}
 
-	update(deltaTime){
+	stateMachine() {
+		if(this.state == "default") {
+			if(this.car.onPosition && !this.car.attached) {
+				this.state = "lowering";
+			}
+		} else if (this.state == "lowering") {
+			if(this.car.attached) {
+				this.state = "lifting";
+			}
+		} else if (this.state == "lifting") {
+			if(this.xRotation == 0) {
+				this.state = "rotating";
+			}
+		} else if (this.state == "rotating") {
+			if(this.yRotation == -3.1) {
+				this.state = "preparing_car";
+			}
+		} else if (this.state == "preparing_car") {
+			if(!this.car.attached) {
+				this.state = "droping_car";
+			}
+		}else if (this.state == "droping_car") {
+			if(this.car.car_position_y == 0.5) {
+				this.state = "reseting";
+			}
+		} else if (this.state == "reseting") {
+			if(this.yRotation == 0) {
+				this.state = "default";
+			}
+		}
+	}
 
+	update(deltaTime){
+		this.stateMachine();
+		
 		// Lowering the magnet and catching the car
-		if(this.car.onPosition && !this.car.attached){
+		if(this.state == "lowering"){
 			if(this.xRotation < 0.57 && this.yRotation == 0){
 				this.xRotation += (deltaTime * 1/5000);
 				if(this.xRotation > 0.57)
@@ -138,50 +170,51 @@ class MyCrane extends CGFobject
 			}
 		}
 
-		if(this.car.attached){
-			// Moving up the magnet with the car
+		// Moving up the magnet with the car
+		else if(this.state == "lifting"){
 			if(this.xRotation > 0 && this.yRotation == 0){
 				this.xRotation -= (deltaTime * 1/4000);
 				if(this.xRotation < 0)
 					this.xRotation = 0;
 			}
+		}
 
-			// Rotating the crane with the car attached to the D position
-			else if(this.xRotation <= 0 && this.yRotation > -3.1){
+		// Rotating the crane with the car attached to the D position
+		else if(this.state == "rotating") {
+			if(this.xRotation <= 0 && this.yRotation > -3.1){
 				this.yRotation -= (deltaTime * 1/2000);
 				if(this.yRotation < -3.1)
 					this.yRotation = -3.1;
 			}
-
-			// Setting up the car to be released from the crane
-			else{
-				drop_car = true;
-				this.car.onPosition = false;
-				this.car.attached = false;
-				this.car.car_position_x = 22;
-				this.car.car_position_y = 3.8;
-				this.car.car_position_z = 13;
-				this.car.car_velocity = 0;
-				this.car.rotationY = 180;
-			}		
 		}
 
-		if(drop_car){
-			// Dropping the car and moving the crane to the original position
+		// Setting up the car to be released from the crane
+		else if(this.state == "preparing_car"){
+			this.car.onPosition = false;
+			this.car.attached = false;
+			this.car.car_position_x = 22;
+			this.car.car_position_y = 3.8;
+			this.car.car_position_z = 13;
+			this.car.car_velocity = 0;
+			this.car.rotationY = 180;
+					
+		}
+
+		// Dropping the car and moving the crane to the original position
+		else if(this.state == "droping_car"){
 			if(this.car.car_position_y > 0.5){
 				this.car.car_position_y -= (deltaTime * 1/80);
 				if(this.car.car_position_y < 0.5)
 					this.car.car_position_y = 0.5;
 			}
+		}
 
 			// Making the crane go back to the original position
-			else{
-				if(this.yRotation < 0){
-					this.yRotation += (deltaTime * 1/2000);
-					if(this.yRotation > 0){
-						this.yRotation = 0;
-						drop_car = false;
-					}
+		else if(this.state == "reseting"){
+			if(this.yRotation < 0){
+				this.yRotation += (deltaTime * 1/2000);
+				if(this.yRotation > 0){
+					this.yRotation = 0;
 				}
 			}
 		}

@@ -205,9 +205,9 @@ class MyVehicle extends CGFobject {
     // Car center front positions
     let frontx = tempx - 5.9 * Math.cos(this.rotationY * degToRad);
     let frontz = tempz + 5.9 * Math.sin(this.rotationY * degToRad);
-    
+
     // Checking if the car is in R position
-    if(frontx > 20 && frontz > 35 && tempx < 27 && tempz < 37 && Math.abs(this.car_velocity) <= 0.1){
+    if(frontx > 20 && frontx < 21.1 && frontz > 35 && frontz < 36.5 && tempx < 27 && tempx > 26.6 && tempz < 36.5 && tempz > 35 && Math.abs(this.car_velocity) <= 0.1){
       this.onPosition = true;
       if(!this.attached)
         this.car_velocity = 0;

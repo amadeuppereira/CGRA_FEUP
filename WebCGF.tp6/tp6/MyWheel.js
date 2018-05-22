@@ -12,10 +12,11 @@ class MyWheel extends CGFobject {
     this.rotZ = -6;
     this.rotX = 0;
 
-    this.front = new MyCircle(scene, 12);
-    this.back = new MyCircle(scene, 12);
-    this.sides = new MyCylinder(scene, 12, 1);
+    // Wheel Elements
+    this.side = new MyCircle(scene, 12);
+    this.cylinder = new MyCylinder(scene, 12, 1);
 
+    // Textures
     this.wheelAppearance = new CGFappearance(scene);
 		this.wheelAppearance.setAmbient(0.3,0.3,0.3,1);
 		this.wheelAppearance.setDiffuse(0.6,0.6,0.6,1);
@@ -36,17 +37,21 @@ class MyWheel extends CGFobject {
   display() {
     this.wheelAppearance.apply();
 
+    // Left Side
     this.scene.pushMatrix();
-			this.scene.translate(0,0,1);
-			this.front.display();
+		this.scene.translate(0,0,1);
+		this.side.display();
 		this.scene.popMatrix();
 
+    // Right Side
     this.scene.pushMatrix();
-      this.scene.rotate(Math.PI, 0, 1, 0);
-		  this.back.display();
+    this.scene.rotate(Math.PI, 0, 1, 0);
+		this.side.display();
     this.scene.popMatrix();
 
     this.wheel2Appearance.apply();
-    this.sides.display();
+
+    // Cylinder
+    this.cylinder.display();
   };
 };

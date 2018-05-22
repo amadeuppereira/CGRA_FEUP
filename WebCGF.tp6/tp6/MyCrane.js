@@ -16,10 +16,12 @@ class MyCrane extends CGFobject
 		this.yRotation = 0;
 		this.xRotation = 0;
 
+		// Elements
 		this.cylinder = new MyCylinder(this.scene,8,20);
 		this.side = new MyCircle(scene, 12);
 		this.car = car;
 
+		// Textures
 		this.craneTexture = new CGFappearance(this.scene);
 		this.craneTexture.loadTexture("../resources/images/crane.png");
 		this.craneTexture.setAmbient(0.6,0.6,0.9,1);
@@ -97,6 +99,7 @@ class MyCrane extends CGFobject
 		}
 	}
 
+	// Creates a closed Cylinder 
 	completeCylinder(){
 		this.scene.pushMatrix();
 		this.scene.translate(0,0,1);
@@ -123,7 +126,7 @@ class MyCrane extends CGFobject
 
 	update(deltaTime){
 
-		//lowering the magnet and catching the car
+		// Lowering the magnet and catching the car
 		if(this.car.onPosition && !this.car.attached){
 			if(this.xRotation < 0.57 && this.yRotation == 0){
 				this.xRotation += (deltaTime * 1/5000);
@@ -135,18 +138,22 @@ class MyCrane extends CGFobject
 			}
 		}
 
-		//moving up the magnet with the car and rotating the crane to D position
 		if(this.car.attached){
+			// Moving up the magnet with the car
 			if(this.xRotation > 0 && this.yRotation == 0){
 				this.xRotation -= (deltaTime * 1/4000);
 				if(this.xRotation < 0)
 					this.xRotation = 0;
 			}
+
+			// Rotating the crane with the car attached to the D position
 			else if(this.xRotation <= 0 && this.yRotation > -3.1){
 				this.yRotation -= (deltaTime * 1/2000);
 				if(this.yRotation < -3.1)
 					this.yRotation = -3.1;
 			}
+
+			// Setting up the car to be released from the crane
 			else{
 				drop_car = true;
 				this.car.onPosition = false;
@@ -159,15 +166,16 @@ class MyCrane extends CGFobject
 			}		
 		}
 
-		//dropping the car and moving the crane to the original position
 		if(drop_car){
+			// Dropping the car and moving the crane to the original position
 			if(this.car.car_position_y > 0.5){
 				this.car.car_position_y -= (deltaTime * 1/80);
 				if(this.car.car_position_y < 0.5)
 					this.car.car_position_y = 0.5;
 			}
+
+			// Making the crane go back to the original position
 			else{
-				//making the crane go back to the original position
 				if(this.yRotation < 0){
 					this.yRotation += (deltaTime * 1/2000);
 					if(this.yRotation > 0){

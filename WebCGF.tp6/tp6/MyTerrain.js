@@ -19,13 +19,13 @@ class MyTerrain extends Plane
        this.applyNormals();
        super.initGLBuffers();
        
+       // Terrain texture
        this.terrainAppearance = new CGFappearance(scene);
        this.terrainAppearance.loadTexture("../resources/images/terrainFloor.png");
 
    };
 
    display() {
-
         this.scene.pushMatrix();
 		this.scene.translate(this.scale/2, 0, this.scale/2);
 		this.scene.scale(this.scale, 1, this.scale);
@@ -116,8 +116,5 @@ class MyTerrain extends Plane
 
         let z = (e * (1 - xCoord) + f * yCoord);
         return z;
-
    }
-
-
 };

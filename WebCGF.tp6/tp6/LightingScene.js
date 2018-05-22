@@ -35,19 +35,19 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		// Scene elements
-		this.altimetry= [[ 20.0 , 20.0 , 20.0, 20.0, 20.5, 20.4, 20.3, 20.3, 20.3 ],
-						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.3 ],
+		this.altimetry= [[ 20.0 , 20.0 , 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0 ],
+						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
 					     [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
                          [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
 					     [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
 						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
 						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
 						 [ 20.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.0 ],
-						 [ 20.0 , 20.0 , 20.0, 20.0, 20.5, 20.4, 20.3, 20.3, 20.3 ]
+						 [ 20.0 , 20.0 , 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0 ]
 						];
 
 		this.terrain = new MyTerrain(this, TERRAIN_DIVISIONS, this.altimetry);
-		this.car = new MyVehicle(this, 25, 25, this.terrain);
+		this.car = new MyVehicle(this, 20, 25, this.terrain);
 		//this.car.attached = true;
 		this.cylinder = new MyCylinder(this, 12, 1);
 		this.trapezium = new MyTrapezium(this, 1, 1);
@@ -63,6 +63,19 @@ class LightingScene extends CGFscene
 		this.objectsTexture.setAmbient(0.6,0.6,0.9,1);
     	this.objectsTexture.setDiffuse(0.6,0.6,0.9,1);
 		this.objectsTexture.setSpecular(0.1,0.1,0.1,1);
+
+
+		this.positionRTexture = new CGFappearance(this);
+		this.positionRTexture.loadTexture("../resources/images/positionR.png");
+		this.positionRTexture.setAmbient(0.6,0.6,0.9,1);
+    	this.positionRTexture.setDiffuse(0.6,0.6,0.9,1);
+		this.positionRTexture.setSpecular(0.1,0.1,0.1,1);
+
+		this.positionDTexture = new CGFappearance(this);
+		this.positionDTexture.loadTexture("../resources/images/positionD.png");
+		this.positionDTexture.setAmbient(0.6,0.6,0.9,1);
+    	this.positionDTexture.setDiffuse(0.6,0.6,0.9,1);
+		this.positionDTexture.setSpecular(0.1,0.1,0.1,1);
 
 		//Interface elements
 		this.light0 = true;
@@ -224,24 +237,22 @@ class LightingScene extends CGFscene
 		this.terrain.display();
 
 		//Crane
-		this.materialDefault.apply();
-		// this.pushMatrix();
-		// this.translate(25, 0, 25);
 		this.crane.display();
-		//this.popMatrix();
 		
 		//Position R
-		this.materialDefault.apply();
 		this.pushMatrix();
-		this.translate(24,0.1,36);
+		this.positionRTexture.apply();
+		this.translate(24,0.01,36);
 		this.scale(7, 1, 4);
+		this.rotate(180 * degToRad, 0,1,0);
 		this.rotate(-90*degToRad, 1, 0, 0);
 		this.position.display();
 		this.popMatrix();
 
 		//Position D
 		this.pushMatrix();
-		this.translate(24,0.1,14);
+		this.positionDTexture.apply();
+		this.translate(25,0.01,13);
 		this.scale(7, 1, 4);
 		this.rotate(-90*degToRad, 1, 0, 0);
 		this.position.display();

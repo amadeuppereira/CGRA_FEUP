@@ -37,7 +37,7 @@ class MyVehicle extends CGFobject {
     this.materialDefault = new CGFappearance(scene);
 
     this.car_window_texture = new CGFappearance(scene);
-    this.car_window_texture.loadTexture("../resources/images/car_window_texture.png");
+    this.car_window_texture.loadTexture("../resources/images/black_texture.png");
     this.car_window_texture.setAmbient(0.6, 0.6, 0.9, 1);
     this.car_window_texture.setDiffuse(0.6, 0.6, 0.9, 1);
     this.car_window_texture.setSpecular(0.1, 0.1, 0.1, 1);
@@ -219,13 +219,16 @@ class MyVehicle extends CGFobject {
     let frontx = tempx - 5.9 * Math.cos(this.rotationY * degToRad);
     let frontz = tempz + 5.9 * Math.sin(this.rotationY * degToRad);
 
-    if(frontx > 20 && frontz > 35 && tempx < 27 && tempz < 37 && Math.abs(this.car_velocity) <= 0.1){
+    console.log("tempz: " + tempz);
+    
+
+    if(frontx > 20.5 && frontx < 21.6 && frontz > 35 && frontz < 36 && tempx < 27.1 && tempx > 26.5 && tempz < 36.8 && tempz > 36 && Math.abs(this.car_velocity) <= 0.1){
       this.onPosition = true;
       if(!this.attached)
         this.car_velocity = 0;
     }
 
-    if (!this.attached) {
+    if (!this.attached && !this.onPosition) {
       
       if(this.terrain != null){
       if (this.terrain.getHeightAt(tempx, tempz) != 0 ||

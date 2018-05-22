@@ -22,9 +22,22 @@ class MyCrane extends CGFobject
 		this.side = new MyCircle(scene, 12);
 		this.car = car;
 
+		this.craneTexture = new CGFappearance(this.scene);
+		this.craneTexture.loadTexture("../resources/images/crane.png");
+		this.craneTexture.setAmbient(0.6,0.6,0.9,1);
+    	this.craneTexture.setDiffuse(0.6,0.6,0.9,1);
+		this.craneTexture.setSpecular(0.1,0.1,0.1,1);
+
+		this.black_texture = new CGFappearance(this.scene);
+		this.black_texture.loadTexture("../resources/images/black_texture.png");
+		this.black_texture.setAmbient(0.6, 0.6, 0.9, 1);
+		this.black_texture.setDiffuse(0.6, 0.6, 0.9, 1);
+		this.black_texture.setSpecular(0.1, 0.1, 0.1, 1);
 	};
 
 	drawCraneComponents(){
+		this.craneTexture.apply();
+
 		//Base Cylinder
 		this.scene.pushMatrix();
 		this.scene.scale(2,1,2);
@@ -58,6 +71,8 @@ class MyCrane extends CGFobject
 		this.scene.scale(0.6,0.6,6);
 		this.completeCylinder();
 		this.scene.popMatrix();
+
+		this.black_texture.apply();
 
 		//Cable
 		this.scene.pushMatrix();
@@ -152,8 +167,6 @@ class MyCrane extends CGFobject
 				this.car.car_position_y -= (deltaTime * 1/80);
 				if(this.car.car_position_y < 0.5)
 					this.car.car_position_y = 0.5;
-				// if((this.car.car_position_y -= (deltaTime * 1/80)) < 0.5)
-				// 	this.car.car_position_y = 0.5;
 			}
 			else{
 				//making the crane go back to the original position
